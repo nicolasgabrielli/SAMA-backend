@@ -21,11 +21,14 @@ public class CampoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer tipo_de_campo;  // 1: Boolean, 2: Table, 3: Text
+    private Integer tipo_de_campo;  // 1: Boolean, 2: Table, 3: Text, 4: Number
     
     private Boolean valor;
     private String tabla;           // Aquí falta definir que tipo de dato podría tener la tabla. Pero por ahora se deja como String. 
     private String texto;
+    private Double numero;
+
+    private Integer tipo_de_numero; // 1: Entero, 2: Decimal, 3: Porcentaje
 
     // Agregar más campos según sea necesario.
     @ManyToOne
