@@ -1,10 +1,10 @@
-package cl.grc.samabackend;
+package sama;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SamaBackendApplicationTests {
+class SamaApplicationTests {
 
 	@Test
 	void contextLoads() {
