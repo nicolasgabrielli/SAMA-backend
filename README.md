@@ -4,10 +4,10 @@ Sistema de Administración de Memoria Anual.
 # Dependencias Utilizadas
 En esta sección se pueden ver las distintas dependencias utilizadas para el desarrollo del proyecto.
 ## Spring Boot
-- PostgreSQL Driver
+- Spring Data MongoDB
 - Lombok
 - Spring Web
-- Spring Data JPA
+- Docker Compose Support 
 
 ## React
 - react
