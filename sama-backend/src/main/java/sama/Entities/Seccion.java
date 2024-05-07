@@ -1,4 +1,5 @@
-package Entities;
+package sama.Entities;
+
 import java.util.List;
 
 public class Seccion {
