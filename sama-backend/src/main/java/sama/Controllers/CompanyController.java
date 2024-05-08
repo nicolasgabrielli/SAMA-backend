@@ -2,6 +2,7 @@ package sama.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sama.DTO.CompanyName;
 import sama.Entities.Company;
 import sama.Services.CompanyService;
 
@@ -28,8 +29,8 @@ public class CompanyController {
         return companyService.update(id, company);
     }
 
-    @PostMapping
-    public Company saveCompany(@RequestBody Company company) {
-        return companyService.save(company);
+    @PostMapping("/crear")
+    public Company saveCompany(@RequestBody CompanyName name) {
+        return companyService.save(name.getName());
     }
 }

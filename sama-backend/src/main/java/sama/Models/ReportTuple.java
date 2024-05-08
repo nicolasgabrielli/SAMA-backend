@@ -1,5 +1,10 @@
 package sama.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ReportTuple {
     private int year;
     private String reportId;
@@ -12,19 +17,4 @@ public class ReportTuple {
         this.reportId = reportId;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getReportId() {
-        return reportId;
-    }
-
-    public void setReportId(String reportId) {
-        this.reportId = reportId;
-    }
 }

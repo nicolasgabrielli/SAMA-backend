@@ -6,6 +6,7 @@ import sama.Entities.Company;
 import sama.Entities.Report;
 import sama.Repositories.CompanyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +18,10 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company save(Company company) {
+    public Company save(String companyName) {
+        Company company = new Company();
+        company.setName(companyName);
+        company.setReports(new ArrayList<>());
         return companyRepository.save(company);
     }
 
@@ -38,5 +42,13 @@ public class CompanyService {
     public Company update(String id, Company company) {
         company.setId(id);
         return companyRepository.save(company);
+    }
+
+    public void desasociarReporte(String id) {
+        List<Company> companies = companyRepository.findAll();
+        for (Company company : companies) {
+            company.getReports().removeIf(report -> report.getReportId().equals(id));
+            companyRepository.save(company);
+        }
     }
 }

@@ -7,6 +7,7 @@ import sama.Models.ReportTuple;
 import sama.Repositories.ReportRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +30,11 @@ public class ReportService {
     }
 
     public Report save(Report report, String companyId) {
+        Date dateNow = new Date();
+        report.setCreationDate(dateNow);
+        report.setLastUpdatedDate(dateNow);
+        report.setState("Pendiente");
+        report.setCompanyId(companyId);
         Report response = reportRepository.save(report);
         companyService.asociarReporte(response, companyId);
         return response;
@@ -39,6 +45,12 @@ public class ReportService {
     }
 
     public Report update(Report report) {
+        report.setLastUpdatedDate(new Date());
         return reportRepository.save(report);
+    }
+
+    public void deleteById(String id) {
+        companyService.desasociarReporte(id);
+        reportRepository.deleteById(id);
     }
 }

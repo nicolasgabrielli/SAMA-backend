@@ -3,10 +3,11 @@ package sama.Models;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class Field {
+public class Category {
     private String name;
-    private String type;
-    private Object value;
+    private List<Section> sections;
 }
