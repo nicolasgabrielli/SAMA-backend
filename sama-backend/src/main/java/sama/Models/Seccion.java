@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Section {
-    private String name;
-    private List<Field> fields;
+public class Seccion {
+    private String nombre;
+    private List<Campo> campos;
 }

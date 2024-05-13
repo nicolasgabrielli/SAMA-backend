@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Category {
-    private String name;
-    private List<Section> sections;
+public class Categoria {
+    private String nombre;
+    private List<Seccion> secciones;
 }

@@ -10,16 +10,16 @@ import java.util.List;
 @Getter
 @Setter
 @Document(collection = "user")
-public class User {
+public class Usuario {
     @Id
     private String id;
-    private String username;
-    private String password;
-    private String email;
-    private String role;
-    private List<String> companies;
+    private String nombre;
+    private String contrasenia;
+    private String correo;
+    private String rol;
+    private List<String> empresas;
 
-    public User() {
+    public Usuario() {
 
     }
 }
