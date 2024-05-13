@@ -15,8 +15,7 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @GetMapping
-// Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.
+    @GetMapping// Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.
     public ResponseEntity<List<Empresa>> obtenerEmpresas() {
         List<Empresa> empresas = empresaService.findAll();
         if (empresas.isEmpty()) {
@@ -32,6 +31,15 @@ public class EmpresaController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(empresas);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Empresa> obtenerEmpresa(@PathVariable String id) {
+        Empresa empresa = empresaService.findById(id);
+        if (empresa == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(empresa);
     }
 
     @DeleteMapping("/{id}")
