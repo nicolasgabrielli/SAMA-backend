@@ -17,3 +17,4 @@ docker pull mongo
 
 docker run --name samaDB -d -p 27017:27017 mongo
 
+Ona vez realizado esto ya se puede ejecutar el backend y debería de contectarse a este contenedor sin problemas.
