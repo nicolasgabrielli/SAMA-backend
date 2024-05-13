@@ -14,5 +14,6 @@ Para ejecutar el backend se debe tener en ejecución un contenedor de Docker que
 Para ello, instalar Docker y luego ejecutar en la consola:
 
 docker pull mongo
+
 docker run --name samaDB -d -p 27017:27017 mongo
 
