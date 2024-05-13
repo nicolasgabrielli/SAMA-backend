@@ -9,10 +9,10 @@ En esta sección se pueden ver las distintas dependencias utilizadas para el des
 - Spring Web
 - Docker Compose Support 
 
-## React
-- react
-- react-dom
-- react-router-dom
-- axios
-- styled-components
-- @mui/material
+## Nota
+Para ejecutar el backend se debe tener en ejecución un contenedor de Docker que contenga una imagen de MongoDB. 
+Para ello, instalar Docker y luego ejecutar en la consola:
+
+docker pull mongo
+docker run --name samaDB -d -p 27017:27017 mongo
+
