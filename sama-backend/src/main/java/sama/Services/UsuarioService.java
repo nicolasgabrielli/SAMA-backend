@@ -20,8 +20,12 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public void deleteById(String id) {
-        usuarioRepository.deleteById(id);
+    public int deleteById(String id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return 1;
+        }
+        return 0;
     }
 
     public Usuario obtenerUsuarioPorId(String id) {

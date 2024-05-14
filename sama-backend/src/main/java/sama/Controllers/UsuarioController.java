@@ -41,7 +41,7 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario actualizado");
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<String> saveUser(@RequestBody Usuario usuario) {
         Usuario savedUser = usuarioService.save(usuario);
         if (savedUser == null) {
@@ -50,10 +50,10 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario guardado");
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteUser(String id) {
-        usuarioService.deleteById(id);
-        if (usuarioService.obtenerUsuarioPorId(id) != null) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable String id) {
+        int response = usuarioService.deleteById(id);
+        if (response == 1) {
             return ResponseEntity.ok("Usuario eliminado");
         }
         return ResponseEntity.status(500).body("Error al eliminar usuario");
