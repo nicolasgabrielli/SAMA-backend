@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Document(collection = "user")
+@Document(collection = "usuario")
 public class Usuario {
     @Id
     private String id;
