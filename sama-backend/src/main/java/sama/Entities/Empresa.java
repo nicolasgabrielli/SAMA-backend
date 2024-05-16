@@ -13,6 +13,13 @@ public class Empresa {
     private String id;
 
     private String nombre;
+    private String tipoSociedad;
+    private String rut;
+    private String domicilioEmpresa;
+    private String paginaWeb;
+    private String email;
+    private String domicilioContacto;
+    private String telefono;
 
     public Empresa() {
     }
