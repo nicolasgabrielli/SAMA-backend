@@ -2,9 +2,12 @@ package sama.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sama.DTO.NuevoContenidoDTO;
 import sama.DTO.EncabezadoReporteDTO;
 import sama.Entities.Reporte;
-import sama.Models.TuplaReporte;
+import sama.Models.Campo;
+import sama.Models.Categoria;
+import sama.Models.Seccion;
 import sama.Repositories.ReporteRepository;
 
 import java.util.ArrayList;
@@ -44,10 +47,40 @@ public class ReporteService {
         return reporteRepository.findById(id).get();
     }
 
-    public Reporte update(Reporte reporte) {
-        reporte.setFechaModificacion(new Date());
+    public Reporte update(String id, NuevoContenidoDTO contenidoNuevo) {
+        Reporte reporte = reporteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
+
+        if (contenidoNuevo.getIndexCategoria() != null) {
+            updateCategoria(reporte, contenidoNuevo);
+        }
+
         return reporteRepository.save(reporte);
     }
+
+    private void updateCategoria(Reporte reporte, NuevoContenidoDTO contenidoNuevo) {
+        Categoria categoria = reporte.getCategorias().get(contenidoNuevo.getIndexCategoria());
+        categoria.setNombre(contenidoNuevo.getNuevoTituloCategoria());
+
+        if (contenidoNuevo.getIndexSeccion() != null) {
+            updateSeccion(categoria, contenidoNuevo);
+        }
+    }
+
+    private void updateSeccion(Categoria categoria, NuevoContenidoDTO contenidoNuevo) {
+        Seccion seccion = categoria.getSecciones().get(contenidoNuevo.getIndexSeccion());
+        seccion.setTitulo(contenidoNuevo.getNuevoTituloSeccion());
+
+        if (contenidoNuevo.getIndexCampo() != null) {
+            updateCampo(seccion, contenidoNuevo);
+        }
+    }
+
+    private void updateCampo(Seccion seccion, NuevoContenidoDTO contenidoNuevo) {
+        Campo campo = seccion.getCampos().get(contenidoNuevo.getIndexCampo());
+        campo.actualizar(contenidoNuevo.getNuevoCampo());
+    }
+
 
     public boolean delete(String id) {
         try {

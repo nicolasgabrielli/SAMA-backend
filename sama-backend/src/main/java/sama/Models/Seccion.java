@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Seccion {
-    private String nombre;
+    private String titulo;
     private List<Campo> campos;
 }

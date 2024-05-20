@@ -3,10 +3,10 @@ package sama.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sama.DTO.NuevoContenidoDTO;
 import sama.DTO.EncabezadoReporteDTO;
 import sama.DTO.ReporteDTO;
 import sama.Entities.Reporte;
-import sama.Models.TuplaReporte;
 import sama.Services.ReporteService;
 
 import java.util.List;
@@ -36,10 +36,10 @@ public class ReporteController {
         return ResponseEntity.ok(reporteDTO);
     }
 
-    @PutMapping("/actualizar")
-    public ResponseEntity<String> updateReport(@RequestBody Reporte reporte) {
-        Reporte updatedReport = reporteService.update(reporte);
-        if (updatedReport == null) {
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<String> updateReport(@PathVariable String id, @RequestBody NuevoContenidoDTO contenidoNuevo) {
+        Reporte reporte = reporteService.update(id, contenidoNuevo);
+        if (reporte == null) {
             return ResponseEntity.status(500).body("Error al actualizar reporte");
         }
         return ResponseEntity.ok("Reporte actualizado");
