@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import sama.Models.Categoria;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Reporte {
 
     @Id
     private String id;
-    private int anio;
+    private Integer anio;
     private String titulo;
     private List<Categoria> categorias;
     private Date fechaCreacion;
@@ -37,5 +38,20 @@ public class Reporte {
         this.fechaModificacion = fechaModificacion;
         this.estado = estado;
         this.empresaId = empresaId;
+    }
+
+    public Reporte clonarYLimpiar() {
+        Reporte clone = new Reporte();
+        clone.setAnio(this.anio);
+        clone.setFechaCreacion(this.fechaCreacion);
+        clone.setFechaModificacion(this.fechaModificacion);
+        if (this.categorias != null) {
+            List<Categoria> categoriasClone = new ArrayList<>();
+            for (Categoria categoria : this.categorias) {
+                categoriasClone.add(categoria.clonarYLimpiar());
+            }
+            clone.setCategorias(categoriasClone);
+        }
+        return clone;
     }
 }

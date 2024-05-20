@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -134,10 +133,10 @@ class ReporteControllerTest {
     }
 
     /**
-     * Method under test: {@link ReporteController#saveReport(String, Reporte)}
+     * Method under test: {@link ReporteController#crearReport(String, Reporte)}
      */
     @Test
-    void testSaveReport() throws Exception {
+    void testCrearReport() throws Exception {
         // Arrange
         Reporte reporte = new Reporte();
         reporte.setAnio(1);

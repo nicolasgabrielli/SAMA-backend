@@ -2,6 +2,7 @@ package sama.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sama.DTO.InfoPresetDTO;
 import sama.DTO.NuevoContenidoDTO;
 import sama.DTO.EncabezadoReporteDTO;
 import sama.Entities.Reporte;
@@ -89,5 +90,25 @@ public class ReporteService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void crearPreset(InfoPresetDTO infoPresetDTO) {
+        Reporte reporte = reporteRepository.findById(infoPresetDTO.getId()).get();
+        Reporte preset = reporte.clonarYLimpiar();
+        preset.setTitulo(infoPresetDTO.getNombre());
+        preset.setFechaCreacion(new Date());
+        preset.setFechaModificacion(new Date());
+        preset.setEstado("Preset");
+        reporteRepository.save(preset);
+    }
+
+    public List<EncabezadoReporteDTO> findAllPresets() {
+        List<Reporte> presets = reporteRepository.findAllByEstado("Preset");
+        List<EncabezadoReporteDTO> encabezados = new ArrayList<>();
+        for (Reporte preset : presets) {
+            EncabezadoReporteDTO encabezado = new EncabezadoReporteDTO(preset);
+            encabezados.add(encabezado);
+        }
+        return encabezados;
     }
 }
