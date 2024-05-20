@@ -15,7 +15,8 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @GetMapping// Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.
+    @GetMapping
+// Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.
     public ResponseEntity<List<Empresa>> obtenerEmpresas() {
         List<Empresa> empresas = empresaService.findAll();
         if (empresas.isEmpty()) {
@@ -46,9 +47,9 @@ public class EmpresaController {
     public ResponseEntity<String> eliminarEmpresa(@PathVariable String id) {
         empresaService.deleteById(id);
         if (empresaService.findById(id) != null) {
-            return ResponseEntity.ok("Empresa eliminada");
+            return ResponseEntity.status(500).body("Error al eliminar empresa");
         }
-        return ResponseEntity.status(500).body("Error al eliminar empresa");
+        return ResponseEntity.ok("Empresa eliminada");
     }
 
     @PutMapping()

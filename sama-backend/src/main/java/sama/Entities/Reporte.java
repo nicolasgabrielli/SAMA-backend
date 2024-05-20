@@ -17,6 +17,7 @@ public class Reporte {
     @Id
     private String id;
     private int anio;
+    private String titulo;
     private List<Categoria> categorias;
     private Date fechaCreacion;
     private Date fechaModificacion;

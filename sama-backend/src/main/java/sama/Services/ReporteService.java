@@ -2,11 +2,13 @@ package sama.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sama.DTO.EncabezadoReporteDTO;
 import sama.Entities.Reporte;
 import sama.Models.TuplaReporte;
 import sama.Repositories.ReporteRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -18,14 +20,15 @@ public class ReporteService {
     @Autowired
     private EmpresaService empresaService;
 
-    public List<TuplaReporte> findAll(String empresaId) {
+    public List<EncabezadoReporteDTO> findAll(String empresaId) {
         // Obtener lista de tuplas (año, id reporte) para una empresa
         List<Reporte> reportes = reporteRepository.findAllByEmpresaId(empresaId);
-        List<TuplaReporte> tuplas = new ArrayList<>();
+        List<EncabezadoReporteDTO> encabezados = new ArrayList<>();
         for (Reporte reporte : reportes) {
-            tuplas.add(new TuplaReporte(reporte.getAnio(), reporte.getId()));
+            EncabezadoReporteDTO encabezado = new EncabezadoReporteDTO(reporte);
+            encabezados.add(encabezado);
         }
-        return tuplas;
+        return encabezados.stream().sorted(Comparator.comparing(EncabezadoReporteDTO::getAnio)).toList();
     }
 
     public Reporte save(Reporte reporte, String companyId) {

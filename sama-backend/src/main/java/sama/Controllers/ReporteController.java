@@ -3,6 +3,7 @@ package sama.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sama.DTO.EncabezadoReporteDTO;
 import sama.DTO.ReporteDTO;
 import sama.Entities.Reporte;
 import sama.Models.TuplaReporte;
@@ -17,8 +18,8 @@ public class ReporteController {
     private ReporteService reporteService;
 
     @GetMapping("/por-empresa/{empresaId}")
-    public ResponseEntity<List<TuplaReporte>> obtenerReportesPorEmpresa(@PathVariable String empresaId) {
-        List<TuplaReporte> reportes = reporteService.findAll(empresaId);
+    public ResponseEntity<List<EncabezadoReporteDTO>> obtenerReportesPorEmpresa(@PathVariable String empresaId) {
+        List<EncabezadoReporteDTO> reportes = reporteService.findAll(empresaId);
         if (reportes.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
