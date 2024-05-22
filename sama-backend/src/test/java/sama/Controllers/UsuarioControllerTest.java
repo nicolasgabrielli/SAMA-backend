@@ -102,6 +102,26 @@ class UsuarioControllerTest {
     }
 
     /**
+     * Method under test: {@link UsuarioController#deleteUser(String)}
+     */
+    @Test
+    void testDeleteUser2() throws Exception {
+        // Arrange
+        when(usuarioService.deleteById(Mockito.<String>any())).thenReturn(0);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/usuario/{id}", "");
+
+        // Act
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(usuarioController)
+                .build()
+                .perform(requestBuilder);
+
+        // Assert
+        actualPerformResult
+                .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed())
+                .andExpect(MockMvcResultMatchers.content().string(""));
+    }
+
+    /**
      * Method under test: {@link UsuarioController#obtenerUsuarioPorId(String)}
      */
     @Test
@@ -114,6 +134,8 @@ class UsuarioControllerTest {
         usuario.setId("42");
         usuario.setNombre("Nombre");
         usuario.setRol("Rol");
+
+
         when(usuarioService.obtenerUsuarioPorId(Mockito.<String>any())).thenReturn(usuario);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/usuario/{id}", "42");
 
@@ -128,6 +150,25 @@ class UsuarioControllerTest {
                                 "{\"id\":\"42\",\"nombre\":\"Nombre\",\"contrasenia\":\"Contrasenia\",\"correo\":\"Correo\",\"rol\":\"Rol\","
                                         + "\"empresas\":[]}"));
     }
+
+    /**
+     * Method under test: {@link UsuarioController#obtenerUsuarioPorId(String)}
+     */
+    @Test
+    void testObtenerUsuarioPorId2() throws Exception {
+        // Arrange
+        when(usuarioService.obtenerUsuarioPorId(Mockito.<String>any())).thenReturn(new Usuario());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/usuario/{id}", "");
+
+        // Act
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(usuarioController)
+                .build()
+                .perform(requestBuilder);
+
+        // Assert
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
 
     /**
      * Method under test: {@link UsuarioController#saveUser(Usuario)}
@@ -166,6 +207,26 @@ class UsuarioControllerTest {
     }
 
     /**
+     * Method under test: {@link UsuarioController#saveUser(Usuario)}
+     */
+    @Test
+    void testSaveUser2() throws Exception {
+        // Arrange
+        String content = (new ObjectMapper()).writeValueAsString(new Usuario());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/usuario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(usuarioController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al guardar usuario"));
+    }
+
+    /**
      * Method under test: {@link UsuarioController#updateUser(Usuario)}
      */
     @Test
@@ -200,4 +261,25 @@ class UsuarioControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(MockMvcResultMatchers.content().string("Usuario actualizado"));
     }
+
+    /**
+     * Method under test: {@link UsuarioController#updateUser(Usuario)}
+     */
+    @Test
+    void testUpdateUser2() throws Exception {
+        // Arrange
+        String content = (new ObjectMapper()).writeValueAsString(new Usuario());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/usuario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(usuarioController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al actualizar usuario"));
+    }
+
 }

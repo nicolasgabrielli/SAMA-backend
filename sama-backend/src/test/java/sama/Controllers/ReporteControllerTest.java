@@ -1,5 +1,6 @@
 package sama.Controllers;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -24,7 +26,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import sama.DTO.EncabezadoReporteDTO;
+import sama.DTO.InfoPresetDTO;
+import sama.DTO.NuevoContenidoDTO;
 import sama.Entities.Reporte;
+import sama.Models.Campo;
 import sama.Models.Categoria;
 import sama.Services.ReporteService;
 
@@ -57,6 +62,24 @@ class ReporteControllerTest {
     }
 
     /**
+     * Method under test: {@link ReporteController#deleteReport(String)}
+     */
+    @Test
+    void testDeleteReport2() throws Exception {
+        // Arrange
+        when(reporteService.delete(Mockito.<String>any())).thenReturn(false);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/reporte/eliminar/{id}", "42");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al eliminar reporte"));
+    }
+
+    /**
      * Method under test: {@link ReporteController#obtenerReporte(String)}
      */
     @Test
@@ -82,6 +105,22 @@ class ReporteControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string("{\"id\":\"42\",\"anio\":1,\"categorias\":[],\"estado\":\"Estado\",\"empresaId\":\"42\"}"));
+    }
+
+    /**
+     * Method under test: {@link ReporteController#obtenerReporte(String)}
+     */
+    @Test
+    void testObtenerReporte2() throws Exception {
+        // Arrange
+        when(reporteService.findById(Mockito.<String>any())).thenReturn(new Reporte());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/reporte/por-id/{id}", "");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     /**
@@ -174,7 +213,29 @@ class ReporteControllerTest {
     }
 
     /**
-     * Method under test: {@link ReporteController#updateReport(Reporte)}
+     * Method under test: {@link ReporteController#crearReport(String, Reporte)}
+     */
+    @Test
+    @Disabled //TODO complete it
+    void testCrearReport2() throws Exception {
+        // Arrange
+        String content = (new ObjectMapper()).writeValueAsString(new Reporte());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/reporte/crear/{companyId}", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al crear reporte"));
+    }
+
+    /**
+     * Method under test:
+     * {@link ReporteController#updateReport(String, NuevoContenidoDTO)}
      */
     @Test
     void testUpdateReport() throws Exception {
@@ -188,20 +249,17 @@ class ReporteControllerTest {
         reporte.setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
         reporte.setId("42");
         reporte.setTitulo("Titulo");
-        when(reporteService.update(Mockito.<Reporte>any())).thenReturn(reporte);
+        when(reporteService.update(Mockito.<String>any(), Mockito.<NuevoContenidoDTO>any())).thenReturn(reporte);
 
-        Reporte reporte2 = new Reporte();
-        reporte2.setAnio(1);
-        reporte2.setCategorias(new ArrayList<>());
-        reporte2.setEmpresaId("42");
-        reporte2.setEstado("Estado");
-        reporte2.setFechaCreacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-        reporte2
-                .setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-        reporte2.setId("42");
-        reporte2.setTitulo("Titulo");
-        String content = (new ObjectMapper()).writeValueAsString(reporte2);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar")
+        NuevoContenidoDTO nuevoContenidoDTO = new NuevoContenidoDTO();
+        nuevoContenidoDTO.setIndexCampo(1);
+        nuevoContenidoDTO.setIndexCategoria(1);
+        nuevoContenidoDTO.setIndexSeccion(1);
+        nuevoContenidoDTO.setNuevoCampo(new Campo());
+        nuevoContenidoDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
+        nuevoContenidoDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
+        String content = (new ObjectMapper()).writeValueAsString(nuevoContenidoDTO);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar/{id}", "42")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
@@ -212,5 +270,186 @@ class ReporteControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(MockMvcResultMatchers.content().string("Reporte actualizado"));
+    }
+
+    /**
+     * Method under test:
+     * {@link ReporteController#updateReport(String, NuevoContenidoDTO)}
+     */
+    @Test
+    void testUpdateReport2() throws Exception {
+        // Arrange
+        Reporte reporte = new Reporte();
+        reporte.setAnio(1);
+        reporte.setCategorias(new ArrayList<>());
+        reporte.setEmpresaId("42");
+        reporte.setEstado("Estado");
+        reporte.setFechaCreacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+        reporte.setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+        reporte.setId("42");
+        reporte.setTitulo("Titulo");
+        when(reporteService.update(Mockito.<String>any(), Mockito.<NuevoContenidoDTO>any())).thenReturn(reporte);
+
+        NuevoContenidoDTO nuevoContenidoDTO = new NuevoContenidoDTO();
+        nuevoContenidoDTO.setIndexCampo(1);
+        nuevoContenidoDTO.setIndexCategoria(1);
+        nuevoContenidoDTO.setIndexSeccion(1);
+        nuevoContenidoDTO.setNuevoCampo(null);
+        nuevoContenidoDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
+        nuevoContenidoDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
+        String content = (new ObjectMapper()).writeValueAsString(nuevoContenidoDTO);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar/{id}", "42")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Reporte actualizado"));
+    }
+
+    /**
+     * Method under test:
+     * {@link ReporteController#updateReport(String, NuevoContenidoDTO)}
+     */
+    @Test
+    @Disabled //TODO complete it
+    void testUpdateReport3() throws Exception {
+        // Arrange
+        NuevoContenidoDTO nuevoContenidoDTO = new NuevoContenidoDTO();
+        nuevoContenidoDTO.setIndexCampo(1);
+        nuevoContenidoDTO.setIndexCategoria(1);
+        nuevoContenidoDTO.setIndexSeccion(1);
+        nuevoContenidoDTO.setNuevoCampo(null);
+        nuevoContenidoDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
+        nuevoContenidoDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
+        String content = (new ObjectMapper()).writeValueAsString(nuevoContenidoDTO);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar/{id}", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al actualizar reporte"));
+    }
+
+    /**
+     * Method under test: {@link ReporteController#crearPreset(InfoPresetDTO)}
+     */
+    @Test
+    void testCrearPreset() throws Exception {
+        // Arrange
+        doNothing().when(reporteService).crearPreset(Mockito.<InfoPresetDTO>any());
+
+        InfoPresetDTO infoPresetDTO = new InfoPresetDTO();
+        infoPresetDTO.setId("42");
+        infoPresetDTO.setNombre("Nombre");
+        String content = (new ObjectMapper()).writeValueAsString(infoPresetDTO);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/reporte/preset")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Preset creado"));
+    }
+
+    /**
+     * Method under test: {@link ReporteController#obtenerPreset(String)}
+     */
+    @Test
+    void testObtenerPreset() throws Exception {
+        // Arrange
+        Reporte reporte = new Reporte();
+        reporte.setAnio(1);
+        reporte.setCategorias(new ArrayList<>());
+        reporte.setEmpresaId("42");
+        reporte.setEstado("Estado");
+        reporte.setFechaCreacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+        reporte.setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
+        reporte.setId("42");
+        reporte.setTitulo("Titulo");
+        when(reporteService.findById(Mockito.<String>any())).thenReturn(reporte);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/reporte/preset/{id}", "42");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string("{\"id\":\"42\",\"anio\":1,\"categorias\":[],\"estado\":\"Estado\",\"empresaId\":\"42\"}"));
+    }
+
+    /**
+     * Method under test: {@link ReporteController#obtenerPreset(String)}
+     */
+    @Test
+    void testObtenerPreset2() throws Exception {
+        // Arrange
+        when(reporteService.findById(Mockito.<String>any())).thenReturn(new Reporte());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/reporte/preset/{id}", "");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    /**
+     * Method under test: {@link ReporteController#obtenerPresets()}
+     */
+    @Test
+    void testObtenerPresets() throws Exception {
+        // Arrange
+        when(reporteService.findAllPresets()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/reporte/preset");
+
+        // Act
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder);
+
+        // Assert
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    /**
+     * Method under test: {@link ReporteController#obtenerPresets()}
+     */
+    @Test
+    void testObtenerPresets2() throws Exception {
+        // Arrange
+        ArrayList<EncabezadoReporteDTO> encabezadoReporteDTOList = new ArrayList<>();
+        ArrayList<Categoria> categorias = new ArrayList<>();
+        Date fechaCreacion = Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant());
+        encabezadoReporteDTOList.add(new EncabezadoReporteDTO(new Reporte(1, categorias, fechaCreacion,
+                Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()), "Estado", "42")));
+        when(reporteService.findAllPresets()).thenReturn(encabezadoReporteDTOList);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/reporte/preset");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(reporteController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"id\":null,\"titulo\":null,\"anio\":1,\"estado\":\"Estado\",\"fechaCreacion\":\"1969-12-31\",\"fechaModificacion"
+                                        + "\":\"1969-12-31\"}]"));
     }
 }

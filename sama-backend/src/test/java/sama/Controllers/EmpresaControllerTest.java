@@ -79,24 +79,70 @@ class EmpresaControllerTest {
     }
 
     /**
+     * Method under test: {@link EmpresaController#actualizarEmpresa(Empresa)}
+     */
+    @Test
+    void testActualizarEmpresa2() throws Exception {
+        // Arrange
+        String content = (new ObjectMapper()).writeValueAsString(new Empresa());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/empresa")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(empresaController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al actualizar empresa"));
+    }
+
+    /**
      * Method under test: {@link EmpresaController#eliminarEmpresa(String)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
+    // @Disabled("TODO: Complete this test")
     void testEliminarEmpresa() throws Exception {
-        // TODO: Diffblue Cover was only able to create a partial test for this method:
-        //   Diffblue AI was unable to find a test
-
         // Arrange
-        // TODO: Populate arranged inputs
+        Empresa empresa = new Empresa();
+        empresa.setDomicilioContacto("alice.liddell@example.org");
+        empresa.setDomicilioEmpresa("Domicilio Empresa");
+        empresa.setEmail("jane.doe@example.org");
+        empresa.setId("42");
+        empresa.setNombre("Nombre");
+        empresa.setPaginaWeb("Pagina Web");
+        empresa.setRut("Rut");
+        empresa.setTelefono("Telefono");
+        empresa.setTipoSociedad("Tipo Sociedad");
+        when(empresaService.save(Mockito.<Empresa>any())).thenReturn(empresa);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/empresa/{id}", "42");
-        MockMvc buildResult = MockMvcBuilders.standaloneSetup(empresaController).build();
 
-        // Act
-        ResultActions actualPerformResult = buildResult.perform(requestBuilder);
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(empresaController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Empresa eliminada"));
+    }
 
-        // Assert
-        // TODO: Add assertions on result
+    /**
+     * Method under test: {@link EmpresaController#eliminarEmpresa(String)}
+     */
+    @Test
+    // @Disabled("TODO: Complete this test")
+    void testEliminarEmpresa2() throws Exception {
+        // Arrange
+        when(empresaService.save(Mockito.<Empresa>any())).thenReturn(null);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/empresa/{id}", "");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(empresaController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed())
+                .andExpect(MockMvcResultMatchers.content().string(""));
     }
 
     /**
@@ -142,6 +188,26 @@ class EmpresaControllerTest {
     }
 
     /**
+     * Method under test: {@link EmpresaController#guardarEmpresa(Empresa)}
+     */
+    @Test
+    void testGuardarEmpresa2() throws Exception {
+        // Arrange
+        String content = (new ObjectMapper()).writeValueAsString(new Empresa());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/empresa")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(empresaController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Error al guardar empresa"));
+    }
+
+    /**
      * Method under test: {@link EmpresaController#obtenerEmpresa(String)}
      */
     @Test
@@ -171,6 +237,22 @@ class EmpresaControllerTest {
                                 "{\"id\":\"42\",\"nombre\":\"Nombre\",\"tipoSociedad\":\"Tipo Sociedad\",\"rut\":\"Rut\",\"domicilioEmpresa\":\"Domicilio"
                                         + " Empresa\",\"paginaWeb\":\"Pagina Web\",\"email\":\"jane.doe@example.org\",\"domicilioContacto\":\"alice.liddell"
                                         + "@example.org\",\"telefono\":\"Telefono\"}"));
+    }
+
+    /**
+     * Method under test: {@link EmpresaController#obtenerEmpresa(String)}
+     */
+    @Test
+    void testObtenerEmpresa2() throws Exception {
+        // Arrange
+        when(empresaService.findById(Mockito.<String>any())).thenReturn(new Empresa());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/empresa/{id}", "");
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(empresaController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     /**
