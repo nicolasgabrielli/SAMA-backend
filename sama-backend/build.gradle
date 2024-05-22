@@ -51,3 +51,9 @@ jacoco {
 	toolVersion = "0.8.11"
 	reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
 }
+
+sonarqube {
+	properties {
+		property 'sonar.exclusions', "src/main/java/sama/SamaApplication.java, src/main/java/sama/Models/*.java, src/main/java/sama/configuration/CorsConfig.java , src/main/java/sama/services/ReporteService.java"
+	}
+}
