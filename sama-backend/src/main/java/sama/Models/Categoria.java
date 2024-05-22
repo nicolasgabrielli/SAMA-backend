@@ -12,6 +12,15 @@ public class Categoria {
     private String nombre;
     private List<Seccion> secciones;
 
+    public Categoria() {
+        this.secciones = new ArrayList<>();
+    }
+
+    public Categoria(String nuevoTituloCategoria) {
+        this.nombre = nuevoTituloCategoria;
+        this.secciones = new ArrayList<>();
+    }
+
     public Categoria clonarYLimpiar() {
         Categoria clone = new Categoria();
         clone.setNombre(this.nombre);

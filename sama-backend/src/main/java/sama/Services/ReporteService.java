@@ -60,20 +60,32 @@ public class ReporteService {
     }
 
     private void updateCategoria(Reporte reporte, NuevoContenidoDTO contenidoNuevo) {
-        Categoria categoria = reporte.getCategorias().get(contenidoNuevo.getIndexCategoria());
-        categoria.setNombre(contenidoNuevo.getNuevoTituloCategoria());
-
-        if (contenidoNuevo.getIndexSeccion() != null) {
-            updateSeccion(categoria, contenidoNuevo);
+        if(contenidoNuevo.getIndexCategoria() > reporte.getCategorias().size() - 1){
+            // No tiene secciones, ya que es categoria nueva
+            Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
+            reporte.getCategorias().add(categoria);
+        }
+        else {
+            Categoria categoria = reporte.getCategorias().get(contenidoNuevo.getIndexCategoria());
+            categoria.setNombre(contenidoNuevo.getNuevoTituloCategoria());
+            if (contenidoNuevo.getIndexSeccion() != null) {
+                updateSeccion(categoria, contenidoNuevo);
+            }
         }
     }
 
     private void updateSeccion(Categoria categoria, NuevoContenidoDTO contenidoNuevo) {
-        Seccion seccion = categoria.getSecciones().get(contenidoNuevo.getIndexSeccion());
-        seccion.setTitulo(contenidoNuevo.getNuevoTituloSeccion());
-
-        if (contenidoNuevo.getIndexCampo() != null) {
-            updateCampo(seccion, contenidoNuevo);
+        if (contenidoNuevo.getIndexSeccion() > categoria.getSecciones().size() - 1) {
+            // No tiene campos, ya que es seccion nueva
+            Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
+            categoria.getSecciones().add(seccion);
+        }
+        else {
+            Seccion seccion = categoria.getSecciones().get(contenidoNuevo.getIndexSeccion());
+            seccion.setTitulo(contenidoNuevo.getNuevoTituloSeccion());
+            if (contenidoNuevo.getIndexCampo() != null) {
+                updateCampo(seccion, contenidoNuevo);
+            }
         }
     }
 
