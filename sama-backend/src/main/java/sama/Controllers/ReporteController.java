@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.Dto.InfoPresetDTO;
-import sama.Dto.NuevoContenidoDTO;
+import sama.Dto.InfoActualizacionDTO;
 import sama.Dto.EncabezadoReporteDTO;
 import sama.Dto.ReporteDTO;
 import sama.Entities.Reporte;
@@ -38,7 +38,7 @@ public class ReporteController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<String> updateReport(@PathVariable String id, @RequestBody NuevoContenidoDTO contenidoNuevo) {
+    public ResponseEntity<String> updateReport(@PathVariable String id, @RequestBody InfoActualizacionDTO contenidoNuevo) {
         Reporte reporte = reporteService.update(id, contenidoNuevo);
         if (reporte == null) {
             return ResponseEntity.status(500).body("Error al actualizar reporte");
@@ -53,6 +53,15 @@ public class ReporteController {
             return ResponseEntity.status(500).body("Error al eliminar reporte");
         }
         return ResponseEntity.ok("Reporte eliminado");
+    }
+
+    @DeleteMapping("/eliminar-contenido/{id}")
+    public ResponseEntity<String> deleteContent(@PathVariable String id, @RequestBody InfoActualizacionDTO contenidoAEliminar){
+        Reporte reporte = reporteService.eliminarContenido(id, contenidoAEliminar);
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al eliminar contenido");
+        }
+        return ResponseEntity.ok("Contenido eliminado");
     }
 
     @PostMapping("/crear/{companyId}")

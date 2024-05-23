@@ -24,7 +24,7 @@ import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sama.Dto.EncabezadoReporteDTO;
 import sama.Dto.InfoPresetDTO;
-import sama.Dto.NuevoContenidoDTO;
+import sama.Dto.InfoActualizacionDTO;
 import sama.Entities.Reporte;
 import sama.Models.Campo;
 import sama.Models.Categoria;
@@ -194,7 +194,7 @@ class ReporteServiceTest {
     }
 
     /**
-     * Method under test: {@link ReporteService#update(String, NuevoContenidoDTO)}
+     * Method under test: {@link ReporteService#update(String, InfoActualizacionDTO)}
      */
     @Test
     void testUpdate() {
@@ -202,7 +202,7 @@ class ReporteServiceTest {
         Optional<Reporte> emptyResult = Optional.empty();
         when(reporteRepository.findById(Mockito.<String>any())).thenReturn(emptyResult);
 
-        NuevoContenidoDTO contenidoNuevo = new NuevoContenidoDTO();
+        InfoActualizacionDTO contenidoNuevo = new InfoActualizacionDTO();
         contenidoNuevo.setIndexCampo(1);
         contenidoNuevo.setIndexCategoria(1);
         contenidoNuevo.setIndexSeccion(1);
@@ -216,7 +216,7 @@ class ReporteServiceTest {
     }
 
     /**
-     * Method under test: {@link ReporteService#update(String, NuevoContenidoDTO)}
+     * Method under test: {@link ReporteService#update(String, InfoActualizacionDTO)}
      */
     @Test
     void testUpdate2() {
@@ -253,7 +253,7 @@ class ReporteServiceTest {
         when(reporteRepository.save(Mockito.<Reporte>any())).thenReturn(reporte2);
         when(reporteRepository.findById(Mockito.<String>any())).thenReturn(ofResult);
 
-        NuevoContenidoDTO contenidoNuevo = new NuevoContenidoDTO();
+        InfoActualizacionDTO contenidoNuevo = new InfoActualizacionDTO();
         contenidoNuevo.setIndexCampo(1);
         contenidoNuevo.setIndexCategoria(null);
         contenidoNuevo.setIndexSeccion(1);
@@ -279,7 +279,7 @@ class ReporteServiceTest {
     }
 
     /**
-     * Method under test: {@link ReporteService#update(String, NuevoContenidoDTO)}
+     * Method under test: {@link ReporteService#update(String, InfoActualizacionDTO)}
      */
     @Test
     void testUpdate3() {
@@ -305,7 +305,7 @@ class ReporteServiceTest {
         when(reporteRepository.save(Mockito.<Reporte>any())).thenThrow(new RuntimeException("foo"));
         when(reporteRepository.findById(Mockito.<String>any())).thenReturn(ofResult);
 
-        NuevoContenidoDTO contenidoNuevo = new NuevoContenidoDTO();
+        InfoActualizacionDTO contenidoNuevo = new InfoActualizacionDTO();
         contenidoNuevo.setIndexCampo(1);
         contenidoNuevo.setIndexCategoria(null);
         contenidoNuevo.setIndexSeccion(1);

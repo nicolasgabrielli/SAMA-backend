@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import sama.Dto.EncabezadoReporteDTO;
 import sama.Dto.InfoPresetDTO;
-import sama.Dto.NuevoContenidoDTO;
+import sama.Dto.InfoActualizacionDTO;
 import sama.Entities.Reporte;
 import sama.Models.Campo;
 import sama.Models.Categoria;
@@ -215,7 +215,7 @@ class ReporteControllerTest {
 
     /**
      * Method under test:
-     * {@link ReporteController#updateReport(String, NuevoContenidoDTO)}
+     * {@link ReporteController#updateReport(String, InfoActualizacionDTO)}
      */
     @Test
     void testUpdateReport() throws Exception {
@@ -229,16 +229,16 @@ class ReporteControllerTest {
         reporte.setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
         reporte.setId("42");
         reporte.setTitulo("Titulo");
-        when(reporteService.update(Mockito.<String>any(), Mockito.<NuevoContenidoDTO>any())).thenReturn(reporte);
+        when(reporteService.update(Mockito.<String>any(), Mockito.<InfoActualizacionDTO>any())).thenReturn(reporte);
 
-        NuevoContenidoDTO nuevoContenidoDTO = new NuevoContenidoDTO();
-        nuevoContenidoDTO.setIndexCampo(1);
-        nuevoContenidoDTO.setIndexCategoria(1);
-        nuevoContenidoDTO.setIndexSeccion(1);
-        nuevoContenidoDTO.setNuevoCampo(new Campo());
-        nuevoContenidoDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
-        nuevoContenidoDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
-        String content = (new ObjectMapper()).writeValueAsString(nuevoContenidoDTO);
+        InfoActualizacionDTO infoActualizacionDTO = new InfoActualizacionDTO();
+        infoActualizacionDTO.setIndexCampo(1);
+        infoActualizacionDTO.setIndexCategoria(1);
+        infoActualizacionDTO.setIndexSeccion(1);
+        infoActualizacionDTO.setNuevoCampo(new Campo());
+        infoActualizacionDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
+        infoActualizacionDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
+        String content = (new ObjectMapper()).writeValueAsString(infoActualizacionDTO);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar/{id}", "42")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
@@ -254,7 +254,7 @@ class ReporteControllerTest {
 
     /**
      * Method under test:
-     * {@link ReporteController#updateReport(String, NuevoContenidoDTO)}
+     * {@link ReporteController#updateReport(String, InfoActualizacionDTO)}
      */
     @Test
     void testUpdateReport2() throws Exception {
@@ -268,16 +268,16 @@ class ReporteControllerTest {
         reporte.setFechaModificacion(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
         reporte.setId("42");
         reporte.setTitulo("Titulo");
-        when(reporteService.update(Mockito.<String>any(), Mockito.<NuevoContenidoDTO>any())).thenReturn(reporte);
+        when(reporteService.update(Mockito.<String>any(), Mockito.<InfoActualizacionDTO>any())).thenReturn(reporte);
 
-        NuevoContenidoDTO nuevoContenidoDTO = new NuevoContenidoDTO();
-        nuevoContenidoDTO.setIndexCampo(1);
-        nuevoContenidoDTO.setIndexCategoria(1);
-        nuevoContenidoDTO.setIndexSeccion(1);
-        nuevoContenidoDTO.setNuevoCampo(null);
-        nuevoContenidoDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
-        nuevoContenidoDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
-        String content = (new ObjectMapper()).writeValueAsString(nuevoContenidoDTO);
+        InfoActualizacionDTO infoActualizacionDTO = new InfoActualizacionDTO();
+        infoActualizacionDTO.setIndexCampo(1);
+        infoActualizacionDTO.setIndexCategoria(1);
+        infoActualizacionDTO.setIndexSeccion(1);
+        infoActualizacionDTO.setNuevoCampo(null);
+        infoActualizacionDTO.setNuevoTituloCategoria("Nuevo Titulo Categoria");
+        infoActualizacionDTO.setNuevoTituloSeccion("Nuevo Titulo Seccion");
+        String content = (new ObjectMapper()).writeValueAsString(infoActualizacionDTO);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/reporte/actualizar/{id}", "42")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);

@@ -6,7 +6,7 @@ import sama.Models.Campo;
 
 @Getter
 @Setter
-public class NuevoContenidoDTO {
+public class InfoActualizacionDTO {
     private Integer indexCategoria;
     private String nuevoTituloCategoria;
     private Integer indexSeccion;

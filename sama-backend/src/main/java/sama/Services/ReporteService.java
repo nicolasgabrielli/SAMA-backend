@@ -3,7 +3,7 @@ package sama.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sama.Dto.InfoPresetDTO;
-import sama.Dto.NuevoContenidoDTO;
+import sama.Dto.InfoActualizacionDTO;
 import sama.Dto.EncabezadoReporteDTO;
 import sama.Entities.Reporte;
 import sama.Models.Campo;
@@ -47,7 +47,7 @@ public class ReporteService {
             return reporteRepository.findById(id).get();
     }
 
-    public Reporte update(String id, NuevoContenidoDTO contenidoNuevo) {
+    public Reporte update(String id, InfoActualizacionDTO contenidoNuevo) {
         Reporte reporte = reporteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
 
@@ -58,7 +58,7 @@ public class ReporteService {
         return reporteRepository.save(reporte);
     }
 
-    private void updateCategoria(Reporte reporte, NuevoContenidoDTO contenidoNuevo) {
+    private void updateCategoria(Reporte reporte, InfoActualizacionDTO contenidoNuevo) {
         if (reporte.getCategorias().isEmpty() || contenidoNuevo.getIndexCategoria() == null){
             // primera categoria
             Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
@@ -78,7 +78,7 @@ public class ReporteService {
         }
     }
 
-    private void updateSeccion(Categoria categoria, NuevoContenidoDTO contenidoNuevo) {
+    private void updateSeccion(Categoria categoria, InfoActualizacionDTO contenidoNuevo) {
         if(categoria.getSecciones().isEmpty() || contenidoNuevo.getIndexSeccion() == null){
             // primera seccion
             Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
@@ -98,7 +98,7 @@ public class ReporteService {
         }
     }
 
-    private void updateCampo(Seccion seccion, NuevoContenidoDTO contenidoNuevo) {
+    private void updateCampo(Seccion seccion, InfoActualizacionDTO contenidoNuevo) {
         if(seccion.getCampos().isEmpty() || contenidoNuevo.getIndexCampo() == null){
             // primer campo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
@@ -143,5 +143,19 @@ public class ReporteService {
             encabezados.add(encabezado);
         }
         return encabezados;
+    }
+
+    public Reporte eliminarContenido(String id, InfoActualizacionDTO contenidoAEliminar) {
+        Reporte reporte = reporteRepository.findById(id).get();
+        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() == null) {
+            reporte.getCategorias().remove(contenidoAEliminar.getIndexCategoria().intValue());
+        }
+        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() != null && contenidoAEliminar.getIndexCampo() == null) {
+            reporte.getCategorias().get(contenidoAEliminar.getIndexCategoria()).getSecciones().remove(contenidoAEliminar.getIndexSeccion().intValue());
+        }
+        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() != null && contenidoAEliminar.getIndexCampo() != null) {
+            reporte.getCategorias().get(contenidoAEliminar.getIndexCategoria()).getSecciones().get(contenidoAEliminar.getIndexSeccion()).getCampos().remove(contenidoAEliminar.getIndexCampo().intValue());
+        }
+        return reporteRepository.save(reporte);
     }
 }
