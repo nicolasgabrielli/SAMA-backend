@@ -14,6 +14,17 @@ public class Campo {
     private Object contenido;
     private List<Campo> subCampos;
 
+    public Campo() {
+        this.subCampos = new ArrayList<>();
+    }
+
+    public Campo(Campo nuevoCampo) {
+        this.nombre = nuevoCampo.getNombre();
+        this.tipo = nuevoCampo.getTipo();
+        this.contenido = nuevoCampo.getContenido();
+        this.subCampos = nuevoCampo.getSubCampos();
+    }
+
     public void actualizar(Campo nuevoCampo) {
         this.nombre = nuevoCampo.getNombre();
         this.tipo = nuevoCampo.getTipo();

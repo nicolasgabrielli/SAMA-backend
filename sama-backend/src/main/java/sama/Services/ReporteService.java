@@ -59,7 +59,12 @@ public class ReporteService {
     }
 
     private void updateCategoria(Reporte reporte, NuevoContenidoDTO contenidoNuevo) {
-        if(contenidoNuevo.getIndexCategoria() > reporte.getCategorias().size() - 1){
+        if (reporte.getCategorias().isEmpty() || contenidoNuevo.getIndexCategoria() == null){
+            // primera categoria
+            Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
+            reporte.getCategorias().add(categoria);
+        }
+        else if(contenidoNuevo.getIndexCategoria() > reporte.getCategorias().size() - 1 ){
             // No tiene secciones, ya que es categoria nueva
             Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
             reporte.getCategorias().add(categoria);
@@ -74,7 +79,12 @@ public class ReporteService {
     }
 
     private void updateSeccion(Categoria categoria, NuevoContenidoDTO contenidoNuevo) {
-        if (contenidoNuevo.getIndexSeccion() > categoria.getSecciones().size() - 1) {
+        if(categoria.getSecciones().isEmpty() || contenidoNuevo.getIndexSeccion() == null){
+            // primera seccion
+            Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
+            categoria.getSecciones().add(seccion);
+        }
+        else if (contenidoNuevo.getIndexSeccion() > categoria.getSecciones().size() - 1) {
             // No tiene campos, ya que es seccion nueva
             Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
             categoria.getSecciones().add(seccion);
@@ -89,8 +99,20 @@ public class ReporteService {
     }
 
     private void updateCampo(Seccion seccion, NuevoContenidoDTO contenidoNuevo) {
-        Campo campo = seccion.getCampos().get(contenidoNuevo.getIndexCampo());
-        campo.actualizar(contenidoNuevo.getNuevoCampo());
+        if(seccion.getCampos().isEmpty() || contenidoNuevo.getIndexCampo() == null){
+            // primer campo
+            Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
+            seccion.getCampos().add(campo);
+        }
+        else if (contenidoNuevo.getIndexCampo() > seccion.getCampos().size() - 1) {
+            // No tiene campos, ya que es campo nuevo
+            Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
+            seccion.getCampos().add(campo);
+        }
+        else {
+            Campo campo = seccion.getCampos().get(contenidoNuevo.getIndexCampo());
+            campo.actualizar(contenidoNuevo.getNuevoCampo());
+        }
     }
 
 
