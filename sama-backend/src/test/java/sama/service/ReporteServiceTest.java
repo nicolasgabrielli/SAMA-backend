@@ -12,7 +12,7 @@ import sama.dto.EncabezadoReporteDTO;
 import sama.dto.InfoActualizacionDTO;
 import sama.dto.InfoPresetDTO;
 import sama.entity.Reporte;
-import sama.models.Campo;
+import sama.model.Campo;
 import sama.repository.ReporteRepository;
 
 import java.time.LocalDate;

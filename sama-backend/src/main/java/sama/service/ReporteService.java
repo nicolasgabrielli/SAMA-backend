@@ -6,9 +6,9 @@ import sama.dto.EncabezadoReporteDTO;
 import sama.dto.InfoActualizacionDTO;
 import sama.dto.InfoPresetDTO;
 import sama.entity.Reporte;
-import sama.models.Campo;
-import sama.models.Categoria;
-import sama.models.Seccion;
+import sama.model.Campo;
+import sama.model.Categoria;
+import sama.model.Seccion;
 import sama.repository.ReporteRepository;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class ReporteService {
         Reporte reporte = reporteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reporte no encontrado"));
 
-        if (contenidoNuevo.getIndexCategoria() != null) {
+        if (contenidoNuevo.getCoordenadas().getIndexCategoria()  != null) {
             updateCategoria(reporte, contenidoNuevo);
         }
 
@@ -59,58 +59,58 @@ public class ReporteService {
     }
 
     private void updateCategoria(Reporte reporte, InfoActualizacionDTO contenidoNuevo) {
-        if (reporte.getCategorias().isEmpty() || contenidoNuevo.getIndexCategoria() == null){
+        if (reporte.getCategorias().isEmpty() || contenidoNuevo.getCoordenadas().getIndexCategoria() == null){
             // primera categoria
             Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
             reporte.getCategorias().add(categoria);
         }
-        else if(contenidoNuevo.getIndexCategoria() > reporte.getCategorias().size() - 1 ){
+        else if(contenidoNuevo.getCoordenadas().getIndexCategoria() > reporte.getCategorias().size() - 1 ){
             // No tiene secciones, ya que es categoria nueva
             Categoria categoria = new Categoria(contenidoNuevo.getNuevoTituloCategoria());
             reporte.getCategorias().add(categoria);
         }
         else {
-            Categoria categoria = reporte.getCategorias().get(contenidoNuevo.getIndexCategoria());
-            categoria.setNombre(contenidoNuevo.getNuevoTituloCategoria());
-            if (contenidoNuevo.getIndexSeccion() != null) {
+            Categoria categoria = reporte.getCategorias().get(contenidoNuevo.getCoordenadas().getIndexCategoria());
+            categoria.setTitulo(contenidoNuevo.getNuevoTituloCategoria());
+            if (contenidoNuevo.getCoordenadas().getIndexSeccion() != null) {
                 updateSeccion(categoria, contenidoNuevo);
             }
         }
     }
 
     private void updateSeccion(Categoria categoria, InfoActualizacionDTO contenidoNuevo) {
-        if(categoria.getSecciones().isEmpty() || contenidoNuevo.getIndexSeccion() == null){
+        if(categoria.getSecciones().isEmpty() || contenidoNuevo.getCoordenadas().getIndexSeccion() == null){
             // primera seccion
             Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
             categoria.getSecciones().add(seccion);
         }
-        else if (contenidoNuevo.getIndexSeccion() > categoria.getSecciones().size() - 1) {
+        else if (contenidoNuevo.getCoordenadas().getIndexSeccion() > categoria.getSecciones().size() - 1) {
             // No tiene campos, ya que es seccion nueva
             Seccion seccion = new Seccion(contenidoNuevo.getNuevoTituloSeccion());
             categoria.getSecciones().add(seccion);
         }
         else {
-            Seccion seccion = categoria.getSecciones().get(contenidoNuevo.getIndexSeccion());
+            Seccion seccion = categoria.getSecciones().get(contenidoNuevo.getCoordenadas().getIndexSeccion());
             seccion.setTitulo(contenidoNuevo.getNuevoTituloSeccion());
-            if (contenidoNuevo.getIndexCampo() != null) {
+            if (contenidoNuevo.getCoordenadas().getIndexCampo() != null) {
                 updateCampo(seccion, contenidoNuevo);
             }
         }
     }
 
     private void updateCampo(Seccion seccion, InfoActualizacionDTO contenidoNuevo) {
-        if(seccion.getCampos().isEmpty() || contenidoNuevo.getIndexCampo() == null){
+        if(seccion.getCampos().isEmpty() || contenidoNuevo.getCoordenadas().getIndexCampo() == null){
             // primer campo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
             seccion.getCampos().add(campo);
         }
-        else if (contenidoNuevo.getIndexCampo() > seccion.getCampos().size() - 1) {
+        else if (contenidoNuevo.getCoordenadas().getIndexCampo() > seccion.getCampos().size() - 1) {
             // No tiene campos, ya que es campo nuevo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
             seccion.getCampos().add(campo);
         }
         else {
-            Campo campo = seccion.getCampos().get(contenidoNuevo.getIndexCampo());
+            Campo campo = seccion.getCampos().get(contenidoNuevo.getCoordenadas().getIndexCampo());
             campo.actualizar(contenidoNuevo.getNuevoCampo());
         }
     }
@@ -147,14 +147,14 @@ public class ReporteService {
 
     public Reporte eliminarContenido(String id, InfoActualizacionDTO contenidoAEliminar) {
         Reporte reporte = reporteRepository.findById(id).get();
-        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() == null) {
-            reporte.getCategorias().remove(contenidoAEliminar.getIndexCategoria().intValue());
+        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() == null) {
+            reporte.getCategorias().remove(contenidoAEliminar.getCoordenadas().getIndexCategoria().intValue());
         }
-        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() != null && contenidoAEliminar.getIndexCampo() == null) {
-            reporte.getCategorias().get(contenidoAEliminar.getIndexCategoria()).getSecciones().remove(contenidoAEliminar.getIndexSeccion().intValue());
+        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() != null && contenidoAEliminar.getCoordenadas().getIndexCampo() == null) {
+            reporte.getCategorias().get(contenidoAEliminar.getCoordenadas().getIndexCategoria()).getSecciones().remove(contenidoAEliminar.getCoordenadas().getIndexSeccion().intValue());
         }
-        if (contenidoAEliminar.getIndexCategoria() !=  null && contenidoAEliminar.getIndexSeccion() != null && contenidoAEliminar.getIndexCampo() != null) {
-            reporte.getCategorias().get(contenidoAEliminar.getIndexCategoria()).getSecciones().get(contenidoAEliminar.getIndexSeccion()).getCampos().remove(contenidoAEliminar.getIndexCampo().intValue());
+        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() != null && contenidoAEliminar.getCoordenadas().getIndexCampo() != null) {
+            reporte.getCategorias().get(contenidoAEliminar.getCoordenadas().getIndexCategoria()).getSecciones().get(contenidoAEliminar.getCoordenadas().getIndexSeccion()).getCampos().remove(contenidoAEliminar.getCoordenadas().getIndexCampo().intValue());
         }
         return reporteRepository.save(reporte);
     }

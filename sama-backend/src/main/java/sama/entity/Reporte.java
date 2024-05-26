@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import sama.models.Categoria;
+import sama.model.Categoria;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +24,7 @@ public class Reporte {
     private Date fechaModificacion;
     private String estado;
     private String empresaId;
+    private String idUsuarioAutorizador;
 
     public Reporte(String empresaId) {
         //Method empty on purpose

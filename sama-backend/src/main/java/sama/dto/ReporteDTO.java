@@ -3,7 +3,7 @@ package sama.dto;
 import lombok.Getter;
 import lombok.Setter;
 import sama.entity.Reporte;
-import sama.models.Categoria;
+import sama.model.Categoria;
 
 import java.util.List;
 

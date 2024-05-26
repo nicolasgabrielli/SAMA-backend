@@ -1,4 +1,4 @@
-package sama.models;
+package sama.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Categoria {
-    private String nombre;
+    private String titulo;
     private List<Seccion> secciones;
 
     public Categoria() {
@@ -17,13 +17,13 @@ public class Categoria {
     }
 
     public Categoria(String nuevoTituloCategoria) {
-        this.nombre = nuevoTituloCategoria;
+        this.titulo = nuevoTituloCategoria;
         this.secciones = new ArrayList<>();
     }
 
     public Categoria clonarYLimpiar() {
         Categoria clone = new Categoria();
-        clone.setNombre(this.nombre);
+        clone.setTitulo(this.titulo);
         if (this.secciones != null) {
             List<Seccion> seccionesClone = new ArrayList<>();
             for (Seccion seccion : this.secciones) {

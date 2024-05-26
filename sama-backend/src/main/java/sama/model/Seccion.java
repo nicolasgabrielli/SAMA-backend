@@ -1,4 +1,4 @@
-package sama.models;
+package sama.model;
 
 import lombok.Getter;
 import lombok.Setter;

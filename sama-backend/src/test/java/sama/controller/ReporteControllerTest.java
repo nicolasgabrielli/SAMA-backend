@@ -19,8 +19,8 @@ import sama.dto.EncabezadoReporteDTO;
 import sama.dto.InfoActualizacionDTO;
 import sama.dto.InfoPresetDTO;
 import sama.entity.Reporte;
-import sama.models.Campo;
-import sama.models.Categoria;
+import sama.model.Campo;
+import sama.model.Categoria;
 import sama.service.ReporteService;
 
 import java.time.LocalDate;
