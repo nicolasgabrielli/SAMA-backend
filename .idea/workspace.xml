@@ -4,14 +4,102 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9328707-fcf8-4050-b3a7-27e17bf2b8c0" name="Changes" comment="">
+    <list default="true" id="a903f754-7c24-4468-951f-d45f436a12b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/ReporteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/ReporteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/SamaApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/configuration/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/EmpresaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/ReporteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/UsuarioController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/CoordenadasReporteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/EmpresaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/EncabezadoReporteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/InfoActualizacionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/InfoPresetDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/ListadoEmpresaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/ReporteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/UsuarioDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Empresa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Evidencia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Reporte.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Campo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Categoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Seccion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/EmpresaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/EvidenciaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/ReporteRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/UsuarioRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/EmpresaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/ReporteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/UsuarioService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/EmpresaControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/ReporteControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/UsuarioControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/EmpresaServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/ReporteServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/UsuarioServiceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sama-backend" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sama-backend" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,28 +116,89 @@
     &quot;accountId&quot;: &quot;382a4aa0-320e-4e99-8452-05899ac9c531&quot;
   }
 }</component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
 }</component>
-  <component name="ProjectId" id="2gR5ErxRfKmqwzeZLPaxCnyhqqI" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2gvFkax9MIVNMpZcDUivtZvacmU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Gradle.Build sama-backend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.sama-backend [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.SamaApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/IRiquelme/Documents/Workspace/sama-backend/sama-backend/src/main/java&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.08326395&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="sama.configuration" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SamaApplication">
+    <configuration name="sama-backend [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="SamaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="sama.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sama.SamaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.sama-backend [dependencies]" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -61,22 +210,41 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e9328707-fcf8-4050-b3a7-27e17bf2b8c0" name="Changes" comment="" />
-      <created>1715647444219</created>
+      <changelist id="a903f754-7c24-4468-951f-d45f436a12b1" name="Changes" comment="" />
+      <created>1716570290878</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715647444219</updated>
-      <workItem from="1715647445541" duration="3000" />
-      <workItem from="1716214253176" duration="452000" />
-      <workItem from="1716214724784" duration="67000" />
-      <workItem from="1716214794603" duration="62000" />
-      <workItem from="1716214869814" duration="57000" />
-      <workItem from="1716652707655" duration="127000" />
-      <workItem from="1716743303933" duration="243000" />
+      <updated>1716570290878</updated>
+      <workItem from="1716570292265" duration="1900000" />
+      <workItem from="1716572224978" duration="11767000" />
+      <workItem from="1716652848003" duration="5992000" />
+      <workItem from="1716743561025" duration="5056000" />
+      <workItem from="1716754532523" duration="3077000" />
+      <workItem from="1716858273687" duration="4063000" />
+      <workItem from="1716914710454" duration="111000" />
+      <workItem from="1716914834165" duration="10000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="name" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
