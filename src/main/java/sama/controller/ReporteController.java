@@ -117,8 +117,17 @@ public class ReporteController {
     }
 
     @DeleteMapping("/eliminar-contenido/{id}")
-    public ResponseEntity<String> deleteContent(@PathVariable String id, @RequestBody InfoActualizacionDTO contenidoAEliminar) {
-        Reporte reporte = reporteService.eliminarContenido(id, contenidoAEliminar);
+    public ResponseEntity<String> deleteContent(@PathVariable String id, @RequestBody CoordenadasReporteDTO coordenadas) {
+        Reporte reporte = reporteService.eliminarContenido(id, coordenadas);
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al eliminar contenido");
+        }
+        return ResponseEntity.ok("Contenido eliminado");
+    }
+
+    @PutMapping("/eliminar-contenido/{id}")
+    public ResponseEntity<String> deleteContent2(@PathVariable String id, @RequestBody CoordenadasReporteDTO coordenadas) {
+        Reporte reporte = reporteService.eliminarContenido(id, coordenadas);
         if (reporte == null) {
             return ResponseEntity.status(500).body("Error al eliminar contenido");
         }

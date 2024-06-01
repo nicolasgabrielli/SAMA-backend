@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 public class ReporteDTO {
     private String id;
+    private String titulo;
     private int anio;
     private List<Categoria> categorias;
     private String estado;
@@ -18,6 +19,7 @@ public class ReporteDTO {
 
     public ReporteDTO(Reporte reporte) {
         this.id = reporte.getId();
+        this.titulo = reporte.getTitulo();
         this.anio = reporte.getAnio();
         this.categorias = reporte.getCategorias();
         this.estado = reporte.getEstado();

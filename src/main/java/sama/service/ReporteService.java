@@ -2,6 +2,7 @@ package sama.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sama.dto.CoordenadasReporteDTO;
 import sama.dto.EncabezadoReporteDTO;
 import sama.dto.InfoActualizacionDTO;
 import sama.dto.InfoPresetDTO;
@@ -145,16 +146,16 @@ public class ReporteService {
         return encabezados;
     }
 
-    public Reporte eliminarContenido(String id, InfoActualizacionDTO contenidoAEliminar) {
+    public Reporte eliminarContenido(String id, CoordenadasReporteDTO coordenadas) {
         Reporte reporte = reporteRepository.findById(id).get();
-        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() == null) {
-            reporte.getCategorias().remove(contenidoAEliminar.getCoordenadas().getIndexCategoria().intValue());
+        if (coordenadas.getIndexCategoria() !=  null && coordenadas.getIndexSeccion() == null) {
+            reporte.getCategorias().remove(coordenadas.getIndexCategoria().intValue());
         }
-        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() != null && contenidoAEliminar.getCoordenadas().getIndexCampo() == null) {
-            reporte.getCategorias().get(contenidoAEliminar.getCoordenadas().getIndexCategoria()).getSecciones().remove(contenidoAEliminar.getCoordenadas().getIndexSeccion().intValue());
+        if (coordenadas.getIndexCategoria() !=  null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() == null) {
+            reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().remove(coordenadas.getIndexSeccion().intValue());
         }
-        if (contenidoAEliminar.getCoordenadas().getIndexCategoria() !=  null && contenidoAEliminar.getCoordenadas().getIndexSeccion() != null && contenidoAEliminar.getCoordenadas().getIndexCampo() != null) {
-            reporte.getCategorias().get(contenidoAEliminar.getCoordenadas().getIndexCategoria()).getSecciones().get(contenidoAEliminar.getCoordenadas().getIndexSeccion()).getCampos().remove(contenidoAEliminar.getCoordenadas().getIndexCampo().intValue());
+        if (coordenadas.getIndexCategoria() !=  null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
+            reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().remove(coordenadas.getIndexCampo().intValue());
         }
         return reporteRepository.save(reporte);
     }

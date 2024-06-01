@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Document(collection = "evidencia")
@@ -15,4 +17,8 @@ public class Evidencia {
     private String nombre;
     private String tipo;
     private String url; // URL de la evidencia, puede ser a una pagina web o a un archivo en el filesystem
+    // Atributos que no se si incluir
+    private String descripcion;
+    private String idUsuario; // Usuario que subio la evidencia
+    private Date fechaSubida;
 }

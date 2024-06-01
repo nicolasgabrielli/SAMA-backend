@@ -96,8 +96,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -144,8 +144,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.SamaApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/IRiquelme/Documents/Workspace/sama-backend/sama-backend/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/IRiquelme/Documents/Workspace/sama-frontend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -222,7 +223,13 @@
       <workItem from="1716754532523" duration="3077000" />
       <workItem from="1716858273687" duration="4063000" />
       <workItem from="1716914710454" duration="111000" />
-      <workItem from="1716914834165" duration="10000" />
+      <workItem from="1716914834165" duration="260000" />
+      <workItem from="1716915180298" duration="86000" />
+      <workItem from="1716915276070" duration="6371000" />
+      <workItem from="1717002413566" duration="2045000" />
+      <workItem from="1717033235734" duration="807000" />
+      <workItem from="1717196262082" duration="4279000" />
+      <workItem from="1717277615856" duration="623000" />
     </task>
     <servers />
   </component>
