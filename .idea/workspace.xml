@@ -167,7 +167,7 @@
       <recent name="sama.configuration" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.sama-backend [dependencies]">
+  <component name="RunManager" selected="Spring Boot.SamaApplication">
     <configuration name="sama-backend [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -238,6 +238,7 @@
       <workItem from="1717425035618" duration="234000" />
       <workItem from="1717428881761" duration="590000" />
       <workItem from="1717429518694" duration="4946000" />
+      <workItem from="1717465619103" duration="1002000" />
     </task>
     <servers />
   </component>

@@ -25,6 +25,7 @@ public class Reporte {
     private String estado;
     private String empresaId;
     private String idUsuarioAutorizador;
+    private List<Evidencia> evidencias;
 
     public Reporte(String empresaId) {
         //Method empty on purpose
