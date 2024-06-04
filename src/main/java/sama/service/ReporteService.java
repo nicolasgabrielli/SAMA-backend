@@ -1,11 +1,7 @@
 package sama.service;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sama.dto.CoordenadasReporteDTO;
@@ -21,7 +17,10 @@ import sama.repository.ReporteRepository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReporteService {
@@ -166,125 +165,76 @@ public class ReporteService {
         reporteRepository.save(reporte);
     }
 
-    // Método para generar un PDF a partir de un reporte
-    // En proceso
+    // Intento generar PDF
 
-//    public byte[] generarPDF(Reporte reporte) throws IOException {
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        PdfWriter writer = new PdfWriter(byteArrayOutputStream);
-//        PdfDocument pdfDocument = new PdfDocument(writer);
-//        Document document = new Document(pdfDocument);
-//
-//        // Añadir el título del reporte con estilos
-//        agregarTitulo(document, reporte.getTitulo());
-//
-//        // Añadir las categorías
-//        for (Categoria categoria : reporte.getCategorias()) {
-//            agregarCategoria(document, categoria);
-//        }
-//
-//        document.close();
-//        return byteArrayOutputStream.toByteArray();
-//    }
-//
-//    private void agregarTitulo(Document document, String titulo) {
-//        Paragraph title = new Paragraph("Reporte: " + titulo)
-//                .setFontSize(20)
-//                .setBold()
-//                .setTextAlignment(TextAlignment.CENTER)
-//                .setMarginBottom(20);
-//        document.add(title);
-//    }
-//
-//    private void agregarCategoria(Document document, Categoria categoria) {
-//        Paragraph categoriaParagraph = new Paragraph("Categoría: " + categoria.getTitulo())
-//                .setFontSize(16)
-//                .setBold()
-//                .setMarginTop(10)
-//                .setMarginBottom(10);
-//        document.add(categoriaParagraph);
-//
-//        // Añadir las secciones de la categoría
-//        for (Seccion seccion : categoria.getSecciones()) {
-//            agregarSeccion(document, seccion);
-//        }
-//    }
-//
-//    private void agregarSeccion(Document document, Seccion seccion) {
-//        Paragraph seccionParagraph = new Paragraph("Sección: " + seccion.getTitulo())
-//                .setFontSize(14)
-//                .setItalic()
-//                .setMarginLeft(10)
-//                .setMarginBottom(5);
-//        document.add(seccionParagraph);
-//
-//        // Añadir los campos de la sección
-//        for (Campo campo : seccion.getCampos()) {
-//            agregarCampo(document, campo);
-//        }
-//    }
-//
-//    private void agregarCampo(Document document, Campo campo) {
-//        Paragraph campoParagraph = new Paragraph("Campo: " + campo.getTitulo())
-//                .setFontSize(12)
-//                .setBold()
-//                .setMarginLeft(20)
-//                .setMarginBottom(2);
-//        document.add(campoParagraph);
-//
-//        if ("tabla".equals(campo.getTipo())) {
-//            agregarTabla(document, campo.getContenido().toString());
-//        } else {
-//            document.add(new Paragraph(campo.getContenido().toString())
-//                    .setFontSize(12)
-//                    .setMarginLeft(25)
-//                    .setMarginBottom(5));
-//        }
-//
-//        // Añadir los subcampos del campo (si existen)
-//        if (campo.getSubCampos() != null && !campo.getSubCampos().isEmpty()) {
-//            for (Campo subcampo : campo.getSubCampos()) {
-//                agregarSubcampo(document, subcampo);
-//            }
-//        }
-//    }
-//
-//    private void agregarSubcampo(Document document, Campo subcampo) {
-//        Paragraph subcampoParagraph = new Paragraph("Subcampo: " + subcampo.getTitulo())
-//                .setFontSize(10)
-//                .setBold()
-//                .setMarginLeft(30)
-//                .setMarginBottom(2);
-//        document.add(subcampoParagraph);
-//
-//        Paragraph subcampoContenido = new Paragraph(subcampo.getContenido().toString())
-//                .setFontSize(10)
-//                .setMarginLeft(35)
-//                .setMarginBottom(5);
-//        document.add(subcampoContenido);
-//    }
-//
-//    private void agregarTabla(Document document, String contenido) {
-//        // Depende del formato del contenido; revisar
-//        // Dividir el contenido en filas
-//        String[] rows = contenido.split("\n");
-//        if (rows.length > 0) {
-//            // Determinar el número de columnas basándose en la primera fila
-//            String[] firstRow = rows[0].split(" ");
-//            int numColumns = firstRow.length;
-//
-//            // Crear la tabla con el número adecuado de columnas
-//            Table table = new Table(UnitValue.createPercentArray(numColumns)).useAllAvailableWidth();
-//
-//            for (String row : rows) {
-//                String[] cells = row.split(" ");
-//                for (String cell : cells) {
-//                    table.addCell(new Cell().add(new Paragraph(cell).setFontSize(12)));
-//                }
-//            }
-//
-//            // Añadir la tabla al documento
-//            document.add(table);
-//        }
-//    }
+    public byte[] generarPDF(String idReporte) throws IOException {
+        Reporte reporte = reporteRepository.findById(idReporte).get();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, baos);
+            document.open();
+            // Agregar el contenido del reporte al documento
+            agregarReporteContent(document, reporte);
+            //Agregar cuadro resumen
+            agregarCuadroResumen(document, reporte);
+
+        } catch (DocumentException e) {
+            throw new IOException(e);
+        } finally {
+            document.close();
+        }
+        return baos.toByteArray();
+    }
+
+    private void agregarCuadroResumen(Document document, Reporte reporte) {
+        //Pendiente
+    }
+
+    private void agregarReporteContent(Document document, Reporte reporte) throws DocumentException {
+        Font reporteFont = new Font(Font.HELVETICA, 20, Font.BOLD);
+        Paragraph tituloReporte = new Paragraph("Reporte: " + reporte.getTitulo(), reporteFont);
+        tituloReporte.setAlignment(Element.ALIGN_CENTER);
+        document.add(tituloReporte);
+
+        for (Categoria categoria : reporte.getCategorias()) {
+            agregarCategoriaContent(document, categoria);
+        }
+    }
+
+    private void agregarCategoriaContent(Document document, Categoria categoria) throws DocumentException {
+        Font categoriaFont = new Font(Font.HELVETICA, 18, Font.BOLD);
+        document.add(new Paragraph(categoria.getTitulo(), categoriaFont));
+
+        for (Seccion seccion : categoria.getSecciones()) {
+            agregarSeccionContent(document, seccion);
+        }
+    }
+
+    private void agregarSeccionContent(Document document, Seccion seccion) throws DocumentException {
+        Font seccionFont = new Font(Font.HELVETICA, 14, Font.BOLD);
+        document.add(new Paragraph(seccion.getTitulo(), seccionFont));
+
+        for (Campo campo : seccion.getCampos()) {
+            agregarCampoContent(document, campo);
+        }
+    }
+
+    private void agregarCampoContent(Document document, Campo campo) throws DocumentException {
+        Font campoFont = new Font(Font.HELVETICA, 12, Font.BOLD);
+        if (!campo.getTipo().equals("tabla")) {
+            document.add(new Paragraph(campo.getTitulo() + ": " + campo.getContenido(), campoFont));
+            if (campo.getSubCampos() != null) {
+                for (Campo subcampo : campo.getSubCampos()) {
+                    agregarSubCampoContent(document, subcampo);
+                }
+            }
+        }
+        // Pendiente: agregar tabla
+    }
+
+    private void agregarSubCampoContent(Document document, Campo campo) throws DocumentException {
+        Font subcampoFont = new Font(Font.HELVETICA, 10, Font.ITALIC);
+        document.add(new Paragraph(campo.getTitulo() + ": " + campo.getContenido(), subcampoFont));
+    }
 }

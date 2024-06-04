@@ -56,7 +56,8 @@ public class EvidenciaService {
                 return null;
             }
         }
-        evidenciaRepository.save(evidencia);
+        Evidencia evidenciaGuardada = evidenciaRepository.save(evidencia);
+        reporteService.asociarEvidencia(idReporte, evidenciaGuardada);
         return "Evidencia guardada";
     }
 

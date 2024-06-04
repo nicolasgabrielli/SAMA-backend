@@ -1,6 +1,8 @@
 package sama.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.*;
@@ -10,6 +12,7 @@ import sama.model.Categoria;
 import sama.model.Seccion;
 import sama.service.ReporteService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -81,6 +84,21 @@ public class ReporteController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos());
+    }
+
+    @GetMapping("/pdf/{idReporte}")
+    public ResponseEntity<byte[]> obtenerPDF(@PathVariable String idReporte) throws IOException {
+        byte[] pdf = reporteService.generarPDF(idReporte);
+        String tituloReporte = reporteService.findById(idReporte).getTitulo();
+        String filename = tituloReporte + ".pdf";
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
+        byte[] pdfContent;
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 
     @PostMapping("/crear/{companyId}")
