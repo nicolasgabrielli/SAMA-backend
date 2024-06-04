@@ -17,17 +17,13 @@ import sama.repository.ReporteRepository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 @Service
 public class ReporteService {
     @Autowired
     private ReporteRepository reporteRepository;
-    @Autowired
-    private EmpresaService empresaService;
 
     public List<EncabezadoReporteDTO> findAll(String empresaId) {
         // Obtener lista de tuplas (año, id reporte) para una empresa
@@ -50,7 +46,12 @@ public class ReporteService {
     }
 
     public Reporte findById(String id) {
-        return reporteRepository.findById(id).get();
+        Optional<Reporte> reporteOptional = reporteRepository.findById(id);
+        if (reporteOptional.isPresent()) {
+            return reporteOptional.get();
+        } else {
+            throw new RuntimeException("Reporte con id " + id + " no encontrado");
+        }
     }
 
     public Reporte update(String id, InfoActualizacionDTO contenidoNuevo) {
@@ -126,13 +127,18 @@ public class ReporteService {
     }
 
     public void crearPreset(InfoPresetDTO infoPresetDTO) {
-        Reporte reporte = reporteRepository.findById(infoPresetDTO.getId()).get();
-        Reporte preset = reporte.clonarYLimpiar();
-        preset.setTitulo(infoPresetDTO.getNombre());
-        preset.setFechaCreacion(new Date());
-        preset.setFechaModificacion(new Date());
-        preset.setEstado("Preset");
-        reporteRepository.save(preset);
+        Optional<Reporte> reporteOptional = reporteRepository.findById(infoPresetDTO.getId());
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            Reporte preset = reporte.clonarYLimpiar();
+            preset.setTitulo(infoPresetDTO.getNombre());
+            preset.setFechaCreacion(new Date());
+            preset.setFechaModificacion(new Date());
+            preset.setEstado("Preset");
+            reporteRepository.save(preset);
+        } else {
+            throw new RuntimeException("Reporte con id " + infoPresetDTO.getId() + " no encontrado");
+        }
     }
 
     public List<EncabezadoReporteDTO> findAllPresets() {
@@ -145,46 +151,59 @@ public class ReporteService {
         return encabezados;
     }
 
+
     public Reporte eliminarContenido(String id, CoordenadasReporteDTO coordenadas) {
-        Reporte reporte = reporteRepository.findById(id).get();
-        if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() == null) {
-            reporte.getCategorias().remove(coordenadas.getIndexCategoria().intValue());
+        Optional<Reporte> reporteOptional = reporteRepository.findById(id);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() == null) {
+                reporte.getCategorias().remove(coordenadas.getIndexCategoria().intValue());
+            }
+            if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() == null) {
+                reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().remove(coordenadas.getIndexSeccion().intValue());
+            }
+            if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
+                reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().remove(coordenadas.getIndexCampo().intValue());
+            }
+            return reporteRepository.save(reporte);
+        } else {
+            throw new RuntimeException("Reporte with id " + id + " not found");
         }
-        if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() == null) {
-            reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().remove(coordenadas.getIndexSeccion().intValue());
-        }
-        if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
-            reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().remove(coordenadas.getIndexCampo().intValue());
-        }
-        return reporteRepository.save(reporte);
     }
 
     public void asociarEvidencia(String idReporte, Evidencia evidencia) {
-        Reporte reporte = reporteRepository.findById(idReporte).get();
-        reporte.getEvidencias().add(evidencia);
-        reporteRepository.save(reporte);
+        Optional<Reporte> reporteOptional = reporteRepository.findById(idReporte);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            reporte.getEvidencias().add(evidencia);
+            reporteRepository.save(reporte);
+        } else {
+            throw new RuntimeException("Reporte con id " + idReporte + " no encontrado");
+        }
     }
 
     // Intento generar PDF
 
     public byte[] generarPDF(String idReporte) throws IOException {
-        Reporte reporte = reporteRepository.findById(idReporte).get();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Document document = new Document();
-        try {
-            PdfWriter.getInstance(document, baos);
-            document.open();
-            // Agregar el contenido del reporte al documento
-            agregarReporteContent(document, reporte);
-            //Agregar cuadro resumen
-            agregarCuadroResumen(document, reporte);
+        Optional<Reporte> reporteOptional = reporteRepository.findById(idReporte);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try (Document document = new Document()) {
+                PdfWriter.getInstance(document, baos);
+                document.open();
+                // Agregar el contenido del reporte al documento
+                agregarReporteContent(document, reporte);
+                //Agregar cuadro resumen
+                agregarCuadroResumen(document, reporte);
 
-        } catch (DocumentException e) {
-            throw new IOException(e);
-        } finally {
-            document.close();
+            } catch (DocumentException e) {
+                throw new IOException(e);
+            }
+            return baos.toByteArray();
+        } else {
+            throw new RuntimeException("Reporte with id " + idReporte + " not found");
         }
-        return baos.toByteArray();
     }
 
     private void agregarCuadroResumen(Document document, Reporte reporte) {

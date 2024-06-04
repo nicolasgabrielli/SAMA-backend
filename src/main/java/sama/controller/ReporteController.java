@@ -94,7 +94,7 @@ public class ReporteController {
         if (pdf == null) {
             return ResponseEntity.notFound().build();
         }
-        byte[] pdfContent;
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.APPLICATION_PDF)
