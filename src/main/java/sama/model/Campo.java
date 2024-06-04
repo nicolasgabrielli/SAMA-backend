@@ -2,6 +2,7 @@ package sama.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import sama.entity.Evidencia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Campo {
     private String tipo;
     private Object contenido;
     private List<Campo> subCampos;
+    private List<Evidencia> evidencias;
 
     public Campo() {
         this.subCampos = new ArrayList<>();

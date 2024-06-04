@@ -120,6 +120,9 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
@@ -164,7 +167,7 @@
       <recent name="sama.configuration" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SamaApplication">
+  <component name="RunManager" selected="Gradle.sama-backend [dependencies]">
     <configuration name="sama-backend [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -231,7 +234,10 @@
       <workItem from="1717196262082" duration="4279000" />
       <workItem from="1717277615856" duration="623000" />
       <workItem from="1717279992392" duration="9388000" />
-      <workItem from="1717350488312" duration="10968000" />
+      <workItem from="1717350488312" duration="11618000" />
+      <workItem from="1717425035618" duration="234000" />
+      <workItem from="1717428881761" duration="590000" />
+      <workItem from="1717429518694" duration="4946000" />
     </task>
     <servers />
   </component>
