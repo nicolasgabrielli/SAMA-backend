@@ -1,7 +1,7 @@
 package sama.service;
 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sama.dto.CoordenadasReporteDTO;
@@ -197,6 +197,11 @@ public class ReporteService {
                 //Agregar cuadro resumen
                 agregarCuadroResumen(document, reporte);
 
+                document.close();
+
+                // Ahora que el documento está cerrado, agregar los números de página
+                addPageNumbers(baos);
+
             } catch (DocumentException e) {
                 throw new IOException(e);
             }
@@ -211,8 +216,8 @@ public class ReporteService {
     }
 
     private void agregarReporteContent(Document document, Reporte reporte) throws DocumentException {
-        Font reporteFont = new Font(Font.HELVETICA, 20, Font.BOLD);
-        Paragraph tituloReporte = new Paragraph("Reporte: " + reporte.getTitulo(), reporteFont);
+        Font reporteFont = new Font(Font.HELVETICA, 24, Font.BOLD);
+        Paragraph tituloReporte = new Paragraph(reporte.getTitulo(), reporteFont);
         tituloReporte.setAlignment(Element.ALIGN_CENTER);
         document.add(tituloReporte);
 
@@ -222,8 +227,10 @@ public class ReporteService {
     }
 
     private void agregarCategoriaContent(Document document, Categoria categoria) throws DocumentException {
-        Font categoriaFont = new Font(Font.HELVETICA, 18, Font.BOLD);
-        document.add(new Paragraph(categoria.getTitulo(), categoriaFont));
+        Font categoriaFont = new Font(Font.HELVETICA, 16, Font.BOLD);
+        Paragraph tituloCategoria = new Paragraph(categoria.getTitulo(), categoriaFont);
+        tituloCategoria.setSpacingAfter(5f);
+        document.add(tituloCategoria);
 
         for (Seccion seccion : categoria.getSecciones()) {
             agregarSeccionContent(document, seccion);
@@ -232,7 +239,10 @@ public class ReporteService {
 
     private void agregarSeccionContent(Document document, Seccion seccion) throws DocumentException {
         Font seccionFont = new Font(Font.HELVETICA, 14, Font.BOLD);
-        document.add(new Paragraph(seccion.getTitulo(), seccionFont));
+        Paragraph tituloSeccion = new Paragraph(seccion.getTitulo(), seccionFont);
+        tituloSeccion.setSpacingAfter(5f);
+        tituloSeccion.setSpacingBefore(5f);
+        document.add(tituloSeccion);
 
         for (Campo campo : seccion.getCampos()) {
             agregarCampoContent(document, campo);
@@ -240,9 +250,18 @@ public class ReporteService {
     }
 
     private void agregarCampoContent(Document document, Campo campo) throws DocumentException {
-        Font campoFont = new Font(Font.HELVETICA, 12, Font.BOLD);
+        Font tiuloCampoFont = new Font(Font.HELVETICA, 13, Font.BOLD);
+        Font contenidoCampoFont = new Font(Font.HELVETICA, 11, Font.NORMAL);
         if (!campo.getTipo().equals("tabla")) {
-            document.add(new Paragraph(campo.getTitulo() + ": " + campo.getContenido(), campoFont));
+            Paragraph tituloCampo = new Paragraph(campo.getTitulo(), tiuloCampoFont);
+            tituloCampo.setSpacingAfter(5f);
+            tituloCampo.setIndentationLeft(10f);
+            document.add(tituloCampo);
+            if (campo.getContenido() != null) {
+                Paragraph contenidoCampo = new Paragraph(String.valueOf(campo.getContenido()), contenidoCampoFont);
+                contenidoCampo.setIndentationLeft(10f);
+                document.add(contenidoCampo);
+            }
             if (campo.getSubCampos() != null) {
                 for (Campo subcampo : campo.getSubCampos()) {
                     agregarSubCampoContent(document, subcampo);
@@ -253,7 +272,42 @@ public class ReporteService {
     }
 
     private void agregarSubCampoContent(Document document, Campo campo) throws DocumentException {
-        Font subcampoFont = new Font(Font.HELVETICA, 10, Font.ITALIC);
-        document.add(new Paragraph(campo.getTitulo() + ": " + campo.getContenido(), subcampoFont));
+        Font tituloSubCampoFont = new Font(Font.HELVETICA, 12, Font.BOLD);
+        Paragraph subcampoTitulo = new Paragraph(campo.getTitulo(), tituloSubCampoFont);
+        subcampoTitulo.setIndentationLeft(15f);
+        subcampoTitulo.setSpacingAfter(2f);
+        document.add(subcampoTitulo);
+
+        if (campo.getContenido() != null) {
+            Font contenidoSubcampoFont = new Font(Font.HELVETICA, 11, Font.NORMAL);
+            Paragraph subcampoContenido = new Paragraph(String.valueOf(campo.getContenido()), contenidoSubcampoFont);
+            subcampoContenido.setIndentationLeft(15f);
+            document.add(subcampoContenido);
+        }
+    }
+
+    private void addPageNumbers(ByteArrayOutputStream baos) throws IOException, DocumentException {
+        ByteArrayOutputStream baosWithPageNumbers = new ByteArrayOutputStream();
+        PdfReader reader = new PdfReader(baos.toByteArray());
+        PdfStamper stamper = new PdfStamper(reader, baosWithPageNumbers);
+        int totalPages = reader.getNumberOfPages();
+
+        for (int i = 1; i <= totalPages; i++) {
+            PdfContentByte cb = stamper.getOverContent(i);
+            Font font = new Font(Font.HELVETICA, 10);
+            Phrase pageNumber = new Phrase(String.format("Página %d de %d", i, totalPages), font);
+            // Ajustar posición para que esté más cerca de la esquina inferior derecha
+            float x = reader.getPageSize(i).getWidth() - 10; // Ajustar este valor según sea necesario
+            float y = 10;
+
+            ColumnText.showTextAligned(cb, Element.ALIGN_RIGHT, pageNumber, x, y, 0);
+        }
+
+        stamper.close();
+        reader.close();
+
+        // Reemplazar el contenido original con el contenido con números de página
+        baos.reset();
+        baosWithPageNumbers.writeTo(baos);
     }
 }
