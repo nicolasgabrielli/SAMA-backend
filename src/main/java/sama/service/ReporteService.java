@@ -1,7 +1,5 @@
 package sama.service;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sama.dto.CoordenadasReporteDTO;
@@ -15,8 +13,6 @@ import sama.model.Categoria;
 import sama.model.Seccion;
 import sama.repository.ReporteRepository;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -26,7 +22,6 @@ public class ReporteService {
     private ReporteRepository reporteRepository;
 
     public List<EncabezadoReporteDTO> findAll(String empresaId) {
-        // Obtener lista de tuplas (año, id reporte) para una empresa
         List<Reporte> reportes = reporteRepository.findAllByEmpresaId(empresaId);
         List<EncabezadoReporteDTO> encabezados = new ArrayList<>();
         for (Reporte reporte : reportes) {
@@ -37,6 +32,7 @@ public class ReporteService {
     }
 
     public Reporte save(Reporte reporte, String companyId) {
+
         Date dateNow = new Date();
         reporte.setFechaCreacion(dateNow);
         reporte.setFechaModificacion(dateNow);
@@ -180,134 +176,5 @@ public class ReporteService {
         } else {
             throw new RuntimeException("Reporte con id " + idReporte + " no encontrado");
         }
-    }
-
-    // Intento generar PDF
-
-    public byte[] generarPDF(String idReporte) throws IOException {
-        Optional<Reporte> reporteOptional = reporteRepository.findById(idReporte);
-        if (reporteOptional.isPresent()) {
-            Reporte reporte = reporteOptional.get();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try (Document document = new Document()) {
-                PdfWriter.getInstance(document, baos);
-                document.open();
-                // Agregar el contenido del reporte al documento
-                agregarReporteContent(document, reporte);
-                //Agregar cuadro resumen
-                agregarCuadroResumen(document, reporte);
-
-                document.close();
-
-                // Ahora que el documento está cerrado, agregar los números de página
-                addPageNumbers(baos);
-
-            } catch (DocumentException e) {
-                throw new IOException(e);
-            }
-            return baos.toByteArray();
-        } else {
-            throw new RuntimeException("Reporte with id " + idReporte + " not found");
-        }
-    }
-
-    private void agregarCuadroResumen(Document document, Reporte reporte) {
-        //Pendiente
-    }
-
-    private void agregarReporteContent(Document document, Reporte reporte) throws DocumentException {
-        Font reporteFont = new Font(Font.HELVETICA, 24, Font.BOLD);
-        Paragraph tituloReporte = new Paragraph(reporte.getTitulo(), reporteFont);
-        tituloReporte.setAlignment(Element.ALIGN_CENTER);
-        document.add(tituloReporte);
-
-        for (Categoria categoria : reporte.getCategorias()) {
-            agregarCategoriaContent(document, categoria);
-        }
-    }
-
-    private void agregarCategoriaContent(Document document, Categoria categoria) throws DocumentException {
-        Font categoriaFont = new Font(Font.HELVETICA, 16, Font.BOLD);
-        Paragraph tituloCategoria = new Paragraph(categoria.getTitulo(), categoriaFont);
-        tituloCategoria.setSpacingAfter(5f);
-        document.add(tituloCategoria);
-
-        for (Seccion seccion : categoria.getSecciones()) {
-            agregarSeccionContent(document, seccion);
-        }
-    }
-
-    private void agregarSeccionContent(Document document, Seccion seccion) throws DocumentException {
-        Font seccionFont = new Font(Font.HELVETICA, 14, Font.BOLD);
-        Paragraph tituloSeccion = new Paragraph(seccion.getTitulo(), seccionFont);
-        tituloSeccion.setSpacingAfter(5f);
-        tituloSeccion.setSpacingBefore(5f);
-        document.add(tituloSeccion);
-
-        for (Campo campo : seccion.getCampos()) {
-            agregarCampoContent(document, campo);
-        }
-    }
-
-    private void agregarCampoContent(Document document, Campo campo) throws DocumentException {
-        Font tiuloCampoFont = new Font(Font.HELVETICA, 13, Font.BOLD);
-        Font contenidoCampoFont = new Font(Font.HELVETICA, 11, Font.NORMAL);
-        if (!campo.getTipo().equals("tabla")) {
-            Paragraph tituloCampo = new Paragraph(campo.getTitulo(), tiuloCampoFont);
-            tituloCampo.setSpacingAfter(5f);
-            tituloCampo.setIndentationLeft(10f);
-            document.add(tituloCampo);
-            if (campo.getContenido() != null) {
-                Paragraph contenidoCampo = new Paragraph(String.valueOf(campo.getContenido()), contenidoCampoFont);
-                contenidoCampo.setIndentationLeft(10f);
-                document.add(contenidoCampo);
-            }
-            if (campo.getSubCampos() != null) {
-                for (Campo subcampo : campo.getSubCampos()) {
-                    agregarSubCampoContent(document, subcampo);
-                }
-            }
-        }
-        // Pendiente: agregar tabla
-    }
-
-    private void agregarSubCampoContent(Document document, Campo campo) throws DocumentException {
-        Font tituloSubCampoFont = new Font(Font.HELVETICA, 12, Font.BOLD);
-        Paragraph subcampoTitulo = new Paragraph(campo.getTitulo(), tituloSubCampoFont);
-        subcampoTitulo.setIndentationLeft(15f);
-        subcampoTitulo.setSpacingAfter(2f);
-        document.add(subcampoTitulo);
-
-        if (campo.getContenido() != null) {
-            Font contenidoSubcampoFont = new Font(Font.HELVETICA, 11, Font.NORMAL);
-            Paragraph subcampoContenido = new Paragraph(String.valueOf(campo.getContenido()), contenidoSubcampoFont);
-            subcampoContenido.setIndentationLeft(15f);
-            document.add(subcampoContenido);
-        }
-    }
-
-    private void addPageNumbers(ByteArrayOutputStream baos) throws IOException, DocumentException {
-        ByteArrayOutputStream baosWithPageNumbers = new ByteArrayOutputStream();
-        PdfReader reader = new PdfReader(baos.toByteArray());
-        PdfStamper stamper = new PdfStamper(reader, baosWithPageNumbers);
-        int totalPages = reader.getNumberOfPages();
-
-        for (int i = 1; i <= totalPages; i++) {
-            PdfContentByte cb = stamper.getOverContent(i);
-            Font font = new Font(Font.HELVETICA, 10);
-            Phrase pageNumber = new Phrase(String.format("Página %d de %d", i, totalPages), font);
-            // Ajustar posición para que esté más cerca de la esquina inferior derecha
-            float x = reader.getPageSize(i).getWidth() - 10; // Ajustar este valor según sea necesario
-            float y = 10;
-
-            ColumnText.showTextAligned(cb, Element.ALIGN_RIGHT, pageNumber, x, y, 0);
-        }
-
-        stamper.close();
-        reader.close();
-
-        // Reemplazar el contenido original con el contenido con números de página
-        baos.reset();
-        baosWithPageNumbers.writeTo(baos);
     }
 }

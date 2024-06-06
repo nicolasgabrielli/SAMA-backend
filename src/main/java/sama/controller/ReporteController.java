@@ -10,6 +10,7 @@ import sama.entity.Reporte;
 import sama.model.Campo;
 import sama.model.Categoria;
 import sama.model.Seccion;
+import sama.service.ReporteDocumentService;
 import sama.service.ReporteService;
 
 import java.io.IOException;
@@ -20,6 +21,9 @@ import java.util.List;
 public class ReporteController {
     @Autowired
     private ReporteService reporteService;
+
+    @Autowired
+    private ReporteDocumentService reporteDocumentService;
 
     @GetMapping("/por-empresa/{empresaId}")
     public ResponseEntity<List<EncabezadoReporteDTO>> obtenerReportesPorEmpresa(@PathVariable String empresaId) {
@@ -86,15 +90,29 @@ public class ReporteController {
         return ResponseEntity.ok(reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos());
     }
 
+    @GetMapping("/word/{idReporte}")
+    public ResponseEntity<byte[]> obtenerWord(@PathVariable String idReporte) throws IOException {
+        byte[] pdf = reporteDocumentService.generarWord(idReporte);
+        String tituloReporte = reporteService.findById(idReporte).getTitulo();
+        String filename = tituloReporte + ".docx";
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
     @GetMapping("/pdf/{idReporte}")
-    public ResponseEntity<byte[]> obtenerPDF(@PathVariable String idReporte) throws IOException {
-        byte[] pdf = reporteService.generarPDF(idReporte);
+    public ResponseEntity<byte[]> obtenerPdf(@PathVariable String idReporte) throws Exception {
+        byte[] pdf = reporteDocumentService.generarPdf(idReporte);
         String tituloReporte = reporteService.findById(idReporte).getTitulo();
         String filename = tituloReporte + ".pdf";
         if (pdf == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.APPLICATION_PDF)
