@@ -41,7 +41,9 @@ public class EvidenciaService {
         evidencia.setNombre(nombre);
         evidencia.setTipo(tipo);
         evidencia.setUrl(url);
+        evidencia.setNombreOriginal(nombre);
         if (archivo != null && !archivo.isEmpty()) {
+            evidencia.setNombreOriginal(archivo.getOriginalFilename());
             String nombreUnico = generarNombreUnico(archivo.getOriginalFilename(), reporteService.findById(idReporte).getTitulo());
             try {
                 PutObjectRequest request = PutObjectRequest.builder()

@@ -13,6 +13,7 @@ public class Evidencia {
     private String id;
     private String idReporte;
     private String nombre;
+    private String nombreOriginal;
     private String tipo;
     private String url;
     private String rutaEvidencia;// Puede ser la url de una pagína web. O el nombre del archivo en el bucket de S3
