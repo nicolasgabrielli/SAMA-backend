@@ -171,6 +171,12 @@ public class ReporteService {
         Optional<Reporte> reporteOptional = reporteRepository.findById(idReporte);
         if (reporteOptional.isPresent()) {
             Reporte reporte = reporteOptional.get();
+            if (reporte.getEvidencias() == null) {
+                reporte.setEvidencias(new ArrayList<>());
+                reporte.getEvidencias().add(evidencia);
+                reporteRepository.save(reporte);
+                return;
+            }
             reporte.getEvidencias().add(evidencia);
             reporteRepository.save(reporte);
         } else {
