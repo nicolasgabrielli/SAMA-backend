@@ -15,6 +15,7 @@ public class Campo {
     private Object contenido;
     private List<Campo> subCampos;
     private List<Evidencia> evidencias;
+    private boolean autorizado = false;
 
     public Campo() {
         this.subCampos = new ArrayList<>();
@@ -49,5 +50,9 @@ public class Campo {
             clone.setSubCampos(subCamposClone);
         }
         return clone;
+    }
+
+    public void autorizar() {
+        this.autorizado = true;
     }
 }

@@ -183,4 +183,17 @@ public class ReporteService {
             throw new RuntimeException("Reporte con id " + idReporte + " no encontrado");
         }
     }
+
+    public Reporte autorizarCampo(String id, CoordenadasReporteDTO coordenadas) {
+        Optional<Reporte> reporteOptional = reporteRepository.findById(id);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
+                reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo()).autorizar();
+            }
+            return reporteRepository.save(reporte);
+        } else {
+            throw new RuntimeException("Reporte con id " + id + " no encontrado");
+        }
+    }
 }

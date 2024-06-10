@@ -143,6 +143,15 @@ public class ReporteController {
         return ResponseEntity.ok("Reporte actualizado");
     }
 
+    @PutMapping("/autorizar/campo/{id}")
+    public ResponseEntity<String> autorizarCampo(@PathVariable String id, @RequestBody CoordenadasReporteDTO coordenadas) {
+        Reporte reporte = reporteService.autorizarCampo(id, coordenadas);
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al autorizar campo");
+        }
+        return ResponseEntity.ok("Campo autorizado");
+    }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> deleteReport(@PathVariable String id) {
         boolean deleted = reporteService.delete(id);
