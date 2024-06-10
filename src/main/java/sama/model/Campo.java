@@ -25,6 +25,7 @@ public class Campo {
         this.tipo = nuevoCampo.getTipo();
         this.contenido = nuevoCampo.getContenido();
         this.subCampos = nuevoCampo.getSubCampos();
+        this.evidencias = nuevoCampo.getEvidencias();
     }
 
     public void actualizar(Campo nuevoCampo) {
@@ -32,6 +33,7 @@ public class Campo {
         this.tipo = nuevoCampo.getTipo();
         this.contenido = nuevoCampo.getContenido();
         this.subCampos = nuevoCampo.getSubCampos();
+        this.evidencias = nuevoCampo.getEvidencias();
     }
 
     public Campo clonarYLimpiar() {
