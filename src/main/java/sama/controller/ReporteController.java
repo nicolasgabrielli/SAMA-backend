@@ -145,7 +145,7 @@ public class ReporteController {
 
     @PutMapping("/autorizar/campo/{id}")
     public ResponseEntity<String> autorizarCampo(@PathVariable String id, @RequestBody CoordenadasReporteDTO coordenadas) {
-        Reporte reporte = reporteService.autorizarCampo(id, coordenadas);
+        Reporte reporte = reporteService.alternarAutorizacionCampo(id, coordenadas);
         if (reporte == null) {
             return ResponseEntity.status(500).body("Error al autorizar campo");
         }

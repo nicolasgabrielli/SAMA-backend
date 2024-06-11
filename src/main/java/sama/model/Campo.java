@@ -3,6 +3,7 @@ package sama.model;
 import lombok.Getter;
 import lombok.Setter;
 import sama.entity.Evidencia;
+import sama.entity.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ public class Campo {
     private Object contenido;
     private List<Campo> subCampos;
     private List<Evidencia> evidencias;
-    private boolean autorizado = false;
+    private Boolean autorizacion;
+    private Usuario autorizador;
 
     public Campo() {
         this.subCampos = new ArrayList<>();
@@ -52,7 +54,7 @@ public class Campo {
         return clone;
     }
 
-    public void autorizar() {
-        this.autorizado = true;
+    public void alternarAutorizacion() {
+        this.autorizacion = !this.autorizacion;
     }
 }

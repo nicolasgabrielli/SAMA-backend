@@ -14,7 +14,6 @@ import sama.model.Seccion;
 import sama.repository.ReporteRepository;
 
 import java.util.*;
-import java.util.List;
 
 @Service
 public class ReporteService {
@@ -184,16 +183,28 @@ public class ReporteService {
         }
     }
 
-    public Reporte autorizarCampo(String id, CoordenadasReporteDTO coordenadas) {
+    public Reporte alternarAutorizacionCampo(String id, CoordenadasReporteDTO coordenadas) {
         Optional<Reporte> reporteOptional = reporteRepository.findById(id);
-        if (reporteOptional.isPresent()) {
-            Reporte reporte = reporteOptional.get();
-            if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
-                reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo()).autorizar();
+        reporteOptional.ifPresentOrElse(
+                reporte -> autorizarCampo(reporte, coordenadas),
+                () -> {
+                    throw new RuntimeException("Reporte con id " + id + " no encontrado");
+                }
+        );
+        return reporteOptional.orElse(null);
+    }
+
+    private void autorizarCampo(Reporte reporte, CoordenadasReporteDTO coordenadas) {
+        if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
+            Campo campo = reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo());
+            if (campo.getAutorizacion() == null) {
+                // Campo no tiene inicializado el campo autorizacion, por lo que se deja como true ya que primero se autoriza antes de desautorizar
+                campo.setAutorizacion(true);
+            } else {
+                // Si el campo ya tiene inicializado ese campo, se alterna el valor
+                campo.alternarAutorizacion();
             }
-            return reporteRepository.save(reporte);
-        } else {
-            throw new RuntimeException("Reporte con id " + id + " no encontrado");
+            reporteRepository.save(reporte);
         }
     }
 }
