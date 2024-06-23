@@ -3,7 +3,6 @@ package sama.service;
 import org.apache.poi.xwpf.usermodel.*;
 import com.aspose.words.Document;
 import com.aspose.words.SaveFormat;
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sama.entity.Reporte;
@@ -12,9 +11,8 @@ import sama.model.Categoria;
 import sama.model.Seccion;
 import sama.repository.ReporteRepository;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,7 +49,7 @@ public class ReporteDocumentService {
         run.setFontSize(18);
     }
 
-    private void agregarCategoria(XWPFDocument document, Categoria categoria) {
+    private void agregarCategoria(XWPFDocument document, Categoria categoria) throws IOException {
         XWPFParagraph categoryTitle = document.createParagraph();
         categoryTitle.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun categoryRun = categoryTitle.createRun();
@@ -65,7 +63,7 @@ public class ReporteDocumentService {
         }
     }
 
-    private void agregarSeccion(XWPFDocument document, Seccion section) {
+    private void agregarSeccion(XWPFDocument document, Seccion section) throws IOException {
         XWPFParagraph sectionTitle = document.createParagraph();
         sectionTitle.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun sectionRun = sectionTitle.createRun();
@@ -79,24 +77,9 @@ public class ReporteDocumentService {
         }
     }
 
-    private void agregarCampo(XWPFDocument document, Campo campo) {
+    private void agregarCampo(XWPFDocument document, Campo campo) throws IOException {
         XWPFParagraph campoParagraph = document.createParagraph();
-        if (campo.getTitulo() != null) {
-            XWPFRun tituloRun = campoParagraph.createRun();
-            tituloRun.setText(campo.getTitulo());
-            tituloRun.setBold(true);
-            tituloRun.setFontSize(13);
-        }
-        if (campo.getContenido() != null) {
-            XWPFRun contenidoRun = campoParagraph.createRun();
-            contenidoRun.addBreak();
-            if (!campo.getTipo().equals("tabla")) {
-                contenidoRun.setText(campo.getContenido().toString());
-                contenidoRun.setFontSize(11);
-            } else {
-                // TODO: Implementar tabla
-            }
-        }
+        agregarTituloYContenido(document, campoParagraph, campo, true);
         if (campo.getSubCampos() != null) {
             for (Campo subCampo : campo.getSubCampos()) {
                 agregarSubCampo(document, subCampo);
@@ -104,24 +87,64 @@ public class ReporteDocumentService {
         }
     }
 
-    private void agregarSubCampo(XWPFDocument document, Campo campo) {
+    private void agregarSubCampo(XWPFDocument document, Campo campo) throws IOException {
         XWPFParagraph campoParagraph = document.createParagraph();
+        agregarTituloYContenido(document, campoParagraph, campo, false);
+    }
+
+    private void agregarTituloYContenido(XWPFDocument document, XWPFParagraph paragraph, Campo campo, boolean isMainField) throws IOException {
         if (campo.getTitulo() != null) {
-            XWPFRun tituloRun = campoParagraph.createRun();
+            XWPFRun tituloRun = paragraph.createRun();
             tituloRun.setText(campo.getTitulo());
             tituloRun.setBold(true);
-            tituloRun.setFontSize(12);
+            tituloRun.setFontSize(isMainField ? 13 : 12);
         }
         if (campo.getContenido() != null) {
-            XWPFRun contenidoRun = campoParagraph.createRun();
+            XWPFRun contenidoRun = paragraph.createRun();
             contenidoRun.addBreak();
             if (!campo.getTipo().equals("tabla")) {
                 contenidoRun.setText(campo.getContenido().toString());
                 contenidoRun.setFontSize(11);
             } else {
-                // TODO: Implementar tabla
+                agregarTabla(document, campo.getContenido());
             }
         }
+    }
+
+    private void agregarTabla(XWPFDocument document, Object contenido) throws IOException {
+        List<String[]> csvData = leerCSV(contenido.toString());
+        if (!csvData.isEmpty()) {
+            XWPFTable table = document.createTable(csvData.size(), csvData.get(0).length);
+            table.setRowBandSize(15);
+            table.setWidth("auto");
+            table.setCellMargins(200, 100, 200, 100);
+
+            for (int i = 0; i < csvData.size(); i++) {
+                XWPFTableRow tableRow = table.getRow(i);
+                String[] row = csvData.get(i);
+                for (int j = 0; j < row.length; j++) {
+                    XWPFTableCell cell = tableRow.getCell(j);
+                    XWPFParagraph paragraph = cell.getParagraphs().get(0);
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
+                    XWPFRun run = paragraph.createRun();
+                    run.setText(row[j]);
+                    run.setFontFamily("Arial");
+                    run.setFontSize(11);
+                }
+            }
+        }
+    }
+
+    private List<String[]> leerCSV(String csvContent) throws IOException {
+        List<String[]> csvData = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new StringReader(csvContent))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                csvData.add(values);
+            }
+        }
+        return csvData;
     }
 
     private void addSummaryTable(XWPFDocument document, Reporte reporte) {
