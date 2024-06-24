@@ -100,6 +100,7 @@ public class ReporteService {
         if (seccion.getCampos().isEmpty() || contenidoNuevo.getCoordenadas().getIndexCampo() == null) {
             // primer campo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
+            campo.setAutorizacion(false);
             seccion.getCampos().add(campo);
         } else if (contenidoNuevo.getCoordenadas().getIndexCampo() > seccion.getCampos().size() - 1) {
             // No tiene campos, ya que es campo nuevo
@@ -198,7 +199,7 @@ public class ReporteService {
         if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
             Campo campo = reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo());
             if (campo.getAutorizacion() == null) {
-                // Campo no tiene inicializado el campo autorizacion, por lo que se deja como true ya que primero se autoriza antes de desautorizar
+                // Campo no tiene inicializado el campo autorizacion, por lo que se deja como true, ya que primero se autoriza antes de desautorizar
                 campo.setAutorizacion(true);
             } else {
                 // Si el campo ya tiene inicializado ese campo, se alterna el valor

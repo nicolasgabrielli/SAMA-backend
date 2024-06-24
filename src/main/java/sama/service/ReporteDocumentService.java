@@ -102,7 +102,7 @@ public class ReporteDocumentService {
         if (campo.getContenido() != null) {
             XWPFRun contenidoRun = paragraph.createRun();
             contenidoRun.addBreak();
-            if (!campo.getTipo().equals("tabla")) {
+            if (!campo.getTipo().equalsIgnoreCase("tabla")) {
                 contenidoRun.setText(campo.getContenido().toString());
                 contenidoRun.setFontSize(11);
             } else {
@@ -114,6 +114,7 @@ public class ReporteDocumentService {
     private void agregarTabla(XWPFDocument document, Object contenido) throws IOException {
         List<String[]> csvData = leerCSV(contenido.toString());
         if (!csvData.isEmpty()) {
+            // Se crea una tabla con el número de filas y columnas necesarias
             XWPFTable table = document.createTable(csvData.size(), csvData.get(0).length);
             table.setRowBandSize(15);
             table.setWidth("auto");
@@ -123,7 +124,11 @@ public class ReporteDocumentService {
                 XWPFTableRow tableRow = table.getRow(i);
                 String[] row = csvData.get(i);
                 for (int j = 0; j < row.length; j++) {
+                    // Verificación de celdas nulas y creación de celdas si es necesario
                     XWPFTableCell cell = tableRow.getCell(j);
+                    if (cell == null) {  // Verifica si la celda es nula
+                        cell = tableRow.createCell();  // Crea la celda si es nula
+                    }
                     XWPFParagraph paragraph = cell.getParagraphs().get(0);
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
                     XWPFRun run = paragraph.createRun();
