@@ -1,5 +1,8 @@
 package sama.service;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.poi.xwpf.usermodel.*;
 import com.aspose.words.Document;
 import com.aspose.words.SaveFormat;
@@ -140,12 +143,20 @@ public class ReporteDocumentService {
         }
     }
 
-    private List<String[]> leerCSV(String csvContent) throws IOException {
+    public List<String[]> leerCSV(String csvContent) throws IOException {
         List<String[]> csvData = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new StringReader(csvContent))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
+        try (BufferedReader br = new BufferedReader(new StringReader(csvContent));
+             CSVParser parser = new CSVParser(br, CSVFormat.DEFAULT.builder()
+                     .setQuote('"')
+                     .setIgnoreSurroundingSpaces(true)
+                     .build())) {
+
+            for (CSVRecord record : parser) {
+                int size = record.size();
+                String[] values = new String[size];
+                for (int i = 0; i < size; i++) {
+                    values[i] = record.get(i);
+                }
                 csvData.add(values);
             }
         }
