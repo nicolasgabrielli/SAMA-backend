@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +17,13 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/reporte")
 public class ReporteController {
-    @Autowired
-    private ReporteService reporteService;
 
-    @Autowired
-    private ReporteDocumentService reporteDocumentService;
+    private final ReporteService reporteService;
+
+    private final ReporteDocumentService reporteDocumentService;
 
     @GetMapping("/por-empresa/{empresaId}")
     public ResponseEntity<List<EncabezadoReporteDTO>> obtenerReportesPorEmpresa(@PathVariable String empresaId) {
@@ -141,6 +141,15 @@ public class ReporteController {
             return ResponseEntity.status(500).body("Error al actualizar reporte");
         }
         return ResponseEntity.ok("Reporte actualizado");
+    }
+
+    @PutMapping("/actualizar/reescribir/{id}")
+    public ResponseEntity<String> reescribirReporte(@PathVariable String id, @RequestBody Reporte nuevoReporte) {
+        Reporte reporte = reporteService.reescribirReporte(id, nuevoReporte);
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al reescribir reporte");
+        }
+        return ResponseEntity.ok("Reporte reescrito");
     }
 
     @PutMapping("/autorizar/campo/{id}")

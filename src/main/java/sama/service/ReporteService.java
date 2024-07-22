@@ -1,6 +1,6 @@
 package sama.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sama.dto.CoordenadasReporteDTO;
 import sama.dto.EncabezadoReporteDTO;
@@ -16,9 +16,10 @@ import sama.repository.ReporteRepository;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ReporteService {
-    @Autowired
-    private ReporteRepository reporteRepository;
+
+    private final ReporteRepository reporteRepository;
 
     public List<EncabezadoReporteDTO> findAll(String empresaId) {
         List<Reporte> reportes = reporteRepository.findAllByEmpresaId(empresaId);
@@ -111,7 +112,6 @@ public class ReporteService {
             campo.actualizar(contenidoNuevo.getNuevoCampo());
         }
     }
-
 
     public boolean delete(String id) {
         try {
@@ -206,6 +206,23 @@ public class ReporteService {
                 campo.alternarAutorizacion();
             }
             reporteRepository.save(reporte);
+        }
+    }
+
+    public Reporte reescribirReporte(String id, Reporte nuevoReporte) {
+        Optional<Reporte> reporteOptional = reporteRepository.findById(id);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            reporte.setTitulo(Optional.ofNullable(nuevoReporte.getTitulo()).orElse(reporte.getTitulo()));
+            reporte.setCategorias(Optional.ofNullable(nuevoReporte.getCategorias()).orElse(reporte.getCategorias()));
+            reporte.setEvidencias(Optional.ofNullable(nuevoReporte.getEvidencias()).orElse(reporte.getEvidencias()));
+            reporte.setEstado(Optional.ofNullable(nuevoReporte.getEstado()).orElse(reporte.getEstado()));
+            reporte.setFechaCreacion(Optional.ofNullable(nuevoReporte.getFechaCreacion()).orElse(reporte.getFechaCreacion()));
+            reporte.setFechaModificacion(Optional.ofNullable(nuevoReporte.getFechaModificacion()).orElse(reporte.getFechaModificacion()));
+            reporte.setEmpresaId(Optional.ofNullable(nuevoReporte.getEmpresaId()).orElse(reporte.getEmpresaId()));
+            return reporteRepository.save(reporte);
+        } else {
+            throw new RuntimeException("Reporte con id " + id + " no encontrado");
         }
     }
 }
