@@ -19,10 +19,29 @@ public class Campo {
     private Boolean autorizacion;
     private Usuario autorizador;
 
+    /**
+     * Constructor por defecto de {@code Campo}.
+     * <p>
+     * Inicializa una nueva instancia de {@code Campo} con una lista vacía de {@code subCampos}.
+     * Esta implementación asegura que cada objeto {@code Campo} tenga su propia lista de subcampos
+     * desde el momento de su creación, evitando así la necesidad de verificar si {@code subCampos}
+     * es {@code null} en otras partes del código.
+     * </p>
+     */
     public Campo() {
         this.subCampos = new ArrayList<>();
     }
 
+    /**
+     * Constructor que crea una nueva instancia de {@code Campo} basada en otro objeto {@code Campo} existente.
+     * <p>
+     * Este constructor copia los valores de los atributos del objeto {@code Campo} proporcionado al nuevo objeto.
+     * Esto incluye el título, tipo, contenido, subcampos y evidencias del campo. Es útil para crear una copia
+     * de un objeto {@code Campo} existente con los mismos valores de atributo.
+     * </p>
+     *
+     * @param nuevoCampo El objeto {@code Campo} del cual se copiarán los valores.
+     */
     public Campo(Campo nuevoCampo) {
         this.titulo = nuevoCampo.getTitulo();
         this.tipo = nuevoCampo.getTipo();
@@ -31,6 +50,17 @@ public class Campo {
         this.evidencias = nuevoCampo.getEvidencias();
     }
 
+    /**
+     * Actualiza los atributos de este objeto {@code Campo} con los valores de otro objeto {@code Campo}.
+     * <p>
+     * Este método toma un objeto {@code Campo} como argumento y actualiza los atributos de este objeto
+     * con los valores correspondientes del objeto argumento. Los atributos actualizados incluyen el título,
+     * tipo, contenido, subcampos y evidencias. Esto permite modificar fácilmente los atributos de un
+     * objeto {@code Campo} existente sin necesidad de establecer cada campo manualmente.
+     * </p>
+     *
+     * @param nuevoCampo El objeto {@code Campo} del cual se copiarán los valores.
+     */
     public void actualizar(Campo nuevoCampo) {
         this.titulo = nuevoCampo.getTitulo();
         this.tipo = nuevoCampo.getTipo();
@@ -39,6 +69,19 @@ public class Campo {
         this.evidencias = nuevoCampo.getEvidencias();
     }
 
+    /**
+     * Crea y devuelve una copia superficial de este objeto {@code Campo}, con el contenido limpiado.
+     * <p>
+     * Este método realiza una copia superficial del objeto {@code Campo} actual. Todos los campos primitivos
+     * y referencias son copiados directamente, excepto el campo {@code contenido}, que se establece como una
+     * cadena vacía (""). Para los {@code subCampos}, se realiza una copia superficial recursiva, asegurando
+     * que cada subcampo también tenga su contenido limpiado.
+     * </p>
+     *
+     * @return Una nueva instancia de {@code Campo} que es una copia superficial del objeto actual,
+     * con el campo {@code contenido} establecido como una cadena vacía y los {@code subCampos}
+     * también clonados y limpiados recursivamente.
+     */
     public Campo clonarYLimpiar() {
         Campo clone = new Campo();
         clone.setTitulo(this.titulo);
@@ -54,6 +97,15 @@ public class Campo {
         return clone;
     }
 
+    /**
+     * Cambia el estado de autorización de este campo.
+     * <p>
+     * Este método invierte el valor actual de la propiedad {@code autorizacion}.
+     * Si la autorización estaba previamente habilitada (true), la deshabilita (false),
+     * y viceversa. Es útil para alternar rápidamente el estado de autorización de un campo
+     * sin necesidad de conocer su estado actual.
+     * </p>
+     */
     public void alternarAutorizacion() {
         this.autorizacion = !this.autorizacion;
     }

@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.EmpresaDTO;
@@ -11,10 +11,11 @@ import sama.service.EmpresaService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/empresa")
 public class EmpresaController {
-    @Autowired
-    private EmpresaService empresaService;
+
+    private final EmpresaService empresaService;
 
     @GetMapping
 // Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.

@@ -1,6 +1,6 @@
 package sama.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sama.entity.Evidencia;
@@ -21,19 +21,16 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EvidenciaService {
 
-    @Autowired
-    private EvidenciaRepository evidenciaRepository;
+    private final EvidenciaRepository evidenciaRepository;
 
-    @Autowired
-    private S3Client s3Client;
+    private final S3Client s3Client;
 
-    @Autowired
-    private S3Presigner s3Presigner;
+    private final S3Presigner s3Presigner;
 
-    @Autowired
-    private ReporteService reporteService;
+    private final ReporteService reporteService;
 
     public String subirEvidencia(String idReporte, String nombre, String tipo, String url, MultipartFile archivo) {
         Evidencia evidencia = new Evidencia();

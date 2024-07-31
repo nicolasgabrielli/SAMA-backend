@@ -22,8 +22,20 @@ public class Empresa {
     private String domicilioContacto;
     private String telefono;
 
+    /**
+     * Constructor por defecto de Empresa.
+     * Inicializa una nueva instancia de la clase Empresa sin establecer valores iniciales para los campos.
+     */
     public Empresa() {
     }
+
+    /**
+     * Constructor que crea una instancia de {@link Empresa} basada en un {@link EmpresaDTO}.
+     * Este constructor copia los valores de los campos desde el objeto DTO proporcionado a la nueva instancia de Empresa.
+     * Esto incluye el id, nombre, tipo de sociedad, RUT, domicilio de la empresa, página web, email, domicilio de contacto y teléfono.
+     *
+     * @param copy El objeto {@link EmpresaDTO} del cual se copian los datos.
+     */
     public Empresa(EmpresaDTO copy) {
         this.id = copy.getId();
         this.nombre = copy.getNombre();

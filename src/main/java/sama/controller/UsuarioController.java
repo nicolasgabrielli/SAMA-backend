@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.UsuarioDTO;
@@ -10,10 +10,11 @@ import sama.service.UsuarioService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/usuario")
 public class UsuarioController {
-    @Autowired
-    private UsuarioService usuarioService;
+
+    private final UsuarioService usuarioService;
 
     @GetMapping
     public ResponseEntity<List<Usuario>> obtenerUsuarios() {
@@ -35,8 +36,7 @@ public class UsuarioController {
 
     @PutMapping()
     public ResponseEntity<String> updateUser(@RequestBody UsuarioDTO usuario) {
-        Usuario data = new Usuario(usuario);
-        Usuario updatedUser = usuarioService.save(data);
+        Usuario updatedUser = usuarioService.update(usuario);
         if (updatedUser == null) {
             return ResponseEntity.status(500).body("Error al actualizar usuario");
         }
@@ -45,8 +45,7 @@ public class UsuarioController {
 
     @PostMapping()
     public ResponseEntity<String> saveUser(@RequestBody UsuarioDTO usuario) {
-        Usuario data = new Usuario(usuario);
-        Usuario savedUser = usuarioService.save(data);
+        Usuario savedUser = usuarioService.save(usuario);
         if (savedUser == null) {
             return ResponseEntity.status(500).body("Error al guardar usuario");
         }

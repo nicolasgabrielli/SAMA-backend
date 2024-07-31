@@ -1,17 +1,20 @@
 package sama.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import sama.dto.UsuarioDTO;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     private String id;
     private String nombre;
@@ -20,16 +23,38 @@ public class Usuario {
     private String rol;
     private List<String> empresas;
 
-    public Usuario() {
-
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(() -> rol);
     }
 
-    public Usuario(UsuarioDTO copy){
-        this.id = copy.getId();
-        this.nombre = copy.getNombre();
-        this.contrasenia = copy.getContrasenia();
-        this.correo = copy.getCorreo();
-        this.rol = copy.getRol();
-        this.empresas = copy.getEmpresas();
+    @Override
+    public String getPassword() {
+        return contrasenia;
+    }
+
+    @Override
+    public String getUsername() {
+        return correo;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

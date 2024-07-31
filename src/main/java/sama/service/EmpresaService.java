@@ -1,6 +1,6 @@
 package sama.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sama.dto.ListadoEmpresaDTO;
 import sama.entity.Empresa;
@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmpresaService {
-    @Autowired
-    private EmpresaRepository empresaRepository;
+
+    private final EmpresaRepository empresaRepository;
 
     public List<Empresa> findAll() {
         return empresaRepository.findAll();

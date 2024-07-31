@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,10 +10,11 @@ import sama.service.EvidenciaService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/evidencia/")
 public class EvidenciaController {
-    @Autowired
-    private EvidenciaService evidenciaService;
+
+    private final EvidenciaService evidenciaService;
 
     @PostMapping("/{idReporte}")
     public ResponseEntity<String> subirEvidencia(@PathVariable String idReporte,
