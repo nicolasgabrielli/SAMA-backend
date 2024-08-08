@@ -27,7 +27,7 @@ public class AdminUserConfig {
                 admin.setNombre("Admin");
                 admin.setCorreo(adminEmail);
                 admin.setContrasenia(passwordEncoder.encode("admin123"));
-                admin.setRol("Administrador");
+                admin.setRol("0");
                 admin.setEmpresas(List.of());
                 usuarioRepository.save(admin);
                 System.out.println("Usuario administrador creado: " + adminEmail);
