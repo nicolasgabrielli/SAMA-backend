@@ -2,10 +2,16 @@ package sama.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import sama.entity.Evidencia;
-import sama.entity.Usuario;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,8 +22,8 @@ public class Campo {
     private Object contenido;
     private List<Campo> subCampos;
     private List<Evidencia> evidencias;
-    private Boolean autorizacion;
-    private Usuario autorizador;
+    private Boolean autorizado;
+    private InfoAutorizador infoAutorizador;
 
     /**
      * Constructor por defecto de {@code Campo}.
@@ -82,11 +88,33 @@ public class Campo {
      * con el campo {@code contenido} establecido como una cadena vacía y los {@code subCampos}
      * también clonados y limpiados recursivamente.
      */
+
     public Campo clonarYLimpiar() {
         Campo clone = new Campo();
         clone.setTitulo(this.titulo);
         clone.setTipo(this.tipo);
-        clone.setContenido("");
+
+        if ("tabla".equalsIgnoreCase(this.tipo) && this.contenido instanceof String) {
+            try (StringReader reader = new StringReader((String) this.contenido);
+                 StringWriter writer = new StringWriter();
+                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+
+                // Leer el contenido CSV
+                List<CSVRecord> records = CSVFormat.DEFAULT.parse(reader).getRecords();
+                if (!records.isEmpty()) {
+                    // Escribir solo la primera fila (encabezados)
+                    csvPrinter.printRecord(records.get(0));
+                }
+
+                clone.setContenido(writer.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                clone.setContenido("");
+            }
+        } else {
+            clone.setContenido("");
+        }
+
         if (this.subCampos != null) {
             List<Campo> subCamposClone = new ArrayList<>();
             for (Campo subCampo : this.subCampos) {
@@ -106,7 +134,21 @@ public class Campo {
      * sin necesidad de conocer su estado actual.
      * </p>
      */
-    public void alternarAutorizacion() {
-        this.autorizacion = !this.autorizacion;
+    public void alternarAutorizacion(String nombreAutorizador, String correoAutorizador) {
+        if (this.autorizado == null || !this.autorizado) {
+            this.autorizar(nombreAutorizador, correoAutorizador);
+        } else {
+            this.desautorizar();
+        }
+    }
+
+    public void autorizar(String nombreAutorizador, String correoAutorizador) {
+        this.autorizado = true;
+        this.infoAutorizador = new InfoAutorizador(nombreAutorizador, correoAutorizador, new Date());
+    }
+
+    public void desautorizar() {
+        this.autorizado = false;
+        this.infoAutorizador = null;
     }
 }

@@ -96,20 +96,25 @@ public class ReporteDocumentService {
     }
 
     private void agregarTituloYContenido(XWPFDocument document, XWPFParagraph paragraph, Campo campo, boolean isMainField) throws IOException {
+
+        if(!isMainField){
+            paragraph.setIndentationLeft(720); // 0.5 pulgadas; ajustar según sea necesario
+        }
+
         if (campo.getTitulo() != null) {
             XWPFRun tituloRun = paragraph.createRun();
             tituloRun.setText(campo.getTitulo());
             tituloRun.setBold(true);
-            tituloRun.setFontSize(isMainField ? 13 : 12);
+            tituloRun.setFontSize(isMainField ? 13 : 12); // Tamaño de fuente para el título de campos principales y secundarios
         }
         if (campo.getContenido() != null) {
             XWPFRun contenidoRun = paragraph.createRun();
             contenidoRun.addBreak();
             if (!campo.getTipo().equalsIgnoreCase("tabla")) {
                 contenidoRun.setText(campo.getContenido().toString());
-                contenidoRun.setFontSize(11);
+                contenidoRun.setFontSize(11); // Tamaño de fuente para el contenido de campos principales y secundarios
             } else {
-                agregarTabla(document, campo.getContenido());
+                agregarTabla(document, campo.getContenido()); // Agregar tabla si el campo es de tipo tabla
             }
         }
     }
@@ -162,82 +167,6 @@ public class ReporteDocumentService {
         }
         return csvData;
     }
-
-//    private void addSummaryTable(XWPFDocument document, Reporte reporte) {
-//        XWPFParagraph summaryTitle = document.createParagraph();
-//        summaryTitle.setStyle("Heading1");
-//        summaryTitle.setAlignment(ParagraphAlignment.LEFT);
-//        XWPFRun titleRun = summaryTitle.createRun();
-//        titleRun.setText("Tabla de indicadores");
-//        titleRun.setBold(true);
-//        titleRun.setFontSize(14);
-//
-//        // Crear la tabla
-//        XWPFTable summaryTable = document.createTable();
-//
-//        // Establecer alineación centrada para todas las celdas
-//        summaryTable.setRowBandSize(15);
-//        summaryTable.setWidth("auto"); // Ajustar al tamaño del contenido
-//        summaryTable.setCellMargins(200, 100, 200, 100);
-//
-//        // Crear fila de encabezado
-//        XWPFTableRow headerRow = summaryTable.getRow(0);
-//
-//        // Crear las celdas necesarias
-//        for (int i = 0; i < 3; i++) {
-//            headerRow.addNewTableCell();
-//        }
-//
-//        // Establecer el texto y el estilo de los encabezados
-//        for (int i = 0; i < 4; i++) {
-//            XWPFTableCell cell = headerRow.getCell(i);
-//            XWPFParagraph paragraph = cell.getParagraphs().get(0);
-//            paragraph.setAlignment(ParagraphAlignment.CENTER);
-//            XWPFRun run = paragraph.createRun();
-//            run.setBold(true); // Establecer negrita
-//            switch (i) {
-//                case 0:
-//                    run.setText("Descripción");
-//                    break;
-//                case 1:
-//                    run.setText("Código");
-//                    break;
-//                case 2:
-//                    run.setText("Capitulo");
-//                    break;
-//                case 3:
-//                    run.setText("Página");
-//                    break;
-//            }
-//        }
-//
-//        int indexCategoria = 1;
-//        for (Categoria category : reporte.getCategorias()) {
-//            for (Seccion section : category.getSecciones()) {
-//                XWPFTableRow row = summaryTable.createRow();
-//                XWPFTableCell cell1 = row.getCell(0);
-//                XWPFTableCell cell2 = row.getCell(1);
-//                XWPFTableCell cell3 = row.getCell(2);
-//
-//                XWPFParagraph p1 = cell1.getParagraphs().get(0);
-//                XWPFParagraph p2 = cell2.getParagraphs().get(0);
-//                XWPFParagraph p3 = cell3.getParagraphs().get(0);
-//
-//                p1.setAlignment(ParagraphAlignment.LEFT);
-//                p2.setAlignment(ParagraphAlignment.CENTER);
-//                p3.setAlignment(ParagraphAlignment.CENTER);
-//
-//                XWPFRun r1 = p1.createRun();
-//                XWPFRun r2 = p2.createRun();
-//                XWPFRun r3 = p3.createRun();
-//
-//                r1.setText(section.getTitulo());
-//                r2.setText("-");
-//                r3.setText(Integer.toString(indexCategoria));
-//            }
-//            indexCategoria++;
-//        }
-//    }
 
     public byte[] generarPdf(String idReporte) throws Exception {
         // Generamos el documento en Word

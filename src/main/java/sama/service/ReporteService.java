@@ -8,10 +8,12 @@ import sama.dto.InfoActualizacionDTO;
 import sama.dto.InfoPresetDTO;
 import sama.entity.Evidencia;
 import sama.entity.Reporte;
+import sama.entity.Usuario;
 import sama.model.Campo;
 import sama.model.Categoria;
 import sama.model.Seccion;
 import sama.repository.ReporteRepository;
+import sama.repository.UsuarioRepository;
 
 import java.util.*;
 
@@ -20,6 +22,7 @@ import java.util.*;
 public class ReporteService {
 
     private final ReporteRepository reporteRepository;
+    private final UsuarioRepository usuarioRepository;
 
     public List<EncabezadoReporteDTO> findAll(String empresaId) {
         List<Reporte> reportes = reporteRepository.findAllByEmpresaId(empresaId);
@@ -101,7 +104,7 @@ public class ReporteService {
         if (seccion.getCampos().isEmpty() || contenidoNuevo.getCoordenadas().getIndexCampo() == null) {
             // primer campo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
-            campo.setAutorizacion(false);
+            campo.setAutorizado(false);
             seccion.getCampos().add(campo);
         } else if (contenidoNuevo.getCoordenadas().getIndexCampo() > seccion.getCampos().size() - 1) {
             // No tiene campos, ya que es campo nuevo
@@ -184,10 +187,11 @@ public class ReporteService {
         }
     }
 
-    public Reporte alternarAutorizacionCampo(String id, CoordenadasReporteDTO coordenadas) {
+    public Reporte alternarAutorizacionCampo(String id, CoordenadasReporteDTO coordenadas, String idUsuario) {
         Optional<Reporte> reporteOptional = reporteRepository.findById(id);
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
         reporteOptional.ifPresentOrElse(
-                reporte -> autorizarCampo(reporte, coordenadas),
+                reporte -> autorizarCampo(reporte, coordenadas, usuario),
                 () -> {
                     throw new RuntimeException("Reporte con id " + id + " no encontrado");
                 }
@@ -195,18 +199,33 @@ public class ReporteService {
         return reporteOptional.orElse(null);
     }
 
-    private void autorizarCampo(Reporte reporte, CoordenadasReporteDTO coordenadas) {
+    private void autorizarCampo(Reporte reporte, CoordenadasReporteDTO coordenadas, Usuario usuario) {
         if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
             Campo campo = reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo());
-            if (campo.getAutorizacion() == null) {
+            if (campo.getAutorizado() == null) {
                 // Campo no tiene inicializado el campo autorizacion, por lo que se deja como true, ya que primero se autoriza antes de desautorizar
-                campo.setAutorizacion(true);
+                campo.autorizar(usuario.getNombre(), usuario.getCorreo());
             } else {
                 // Si el campo ya tiene inicializado ese campo, se alterna el valor
-                campo.alternarAutorizacion();
+                campo.alternarAutorizacion(usuario.getNombre(), usuario.getCorreo());
             }
             reporteRepository.save(reporte);
         }
+    }
+
+    public Reporte autorizarTodosLosCampos(String idReporte, String idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        Reporte reporte = reporteRepository.findById(idReporte).get();
+        for (Categoria categoria : reporte.getCategorias()) {
+            for (Seccion seccion : categoria.getSecciones()) {
+                for (Campo campo : seccion.getCampos()) {
+                    if (campo.getAutorizado() == null || !campo.getAutorizado()) {
+                        campo.autorizar(usuario.getNombre(), usuario.getCorreo());
+                    }
+                }
+            }
+        }
+        return reporteRepository.save(reporte);
     }
 
     public Reporte reescribirReporte(String id, Reporte nuevoReporte) {

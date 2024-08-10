@@ -22,7 +22,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario save(UsuarioDTO usuario) {
+    public int save(UsuarioDTO usuario) {
+        if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
+            return 1; // Usuario ya existe
+        }
         Usuario nuevoUsuario = Usuario.builder()
                 .nombre(usuario.getNombre())
                 .correo(usuario.getCorreo())
@@ -30,15 +33,16 @@ public class UsuarioService {
                 .rol(usuario.getRol())
                 .empresas(usuario.getEmpresas())
                 .build();
-        return usuarioRepository.save(nuevoUsuario);
+        usuarioRepository.save(nuevoUsuario);
+        return 0; // Usuario guardado
     }
 
     public int deleteById(String id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
-            return 1;
+            return 1; // Usuario eliminado
         }
-        return 0;
+        return 0; // Usuario no encontrado
     }
 
     public Usuario obtenerUsuarioPorId(String id) {

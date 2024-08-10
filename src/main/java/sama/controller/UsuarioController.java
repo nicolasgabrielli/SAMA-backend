@@ -45,9 +45,9 @@ public class UsuarioController {
 
     @PostMapping()
     public ResponseEntity<String> saveUser(@RequestBody UsuarioDTO usuario) {
-        Usuario savedUser = usuarioService.save(usuario);
-        if (savedUser == null) {
-            return ResponseEntity.status(500).body("Error al guardar usuario");
+        int response = usuarioService.save(usuario);
+        if (response == 1) {
+            return ResponseEntity.status(500).body("Usuario ya existe");
         }
         return ResponseEntity.ok("Usuario guardado");
     }
