@@ -1,13 +1,14 @@
 package sama.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import sama.dto.EmpresaDTO;
 
-@Setter
-@Getter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "empresa")
 public class Empresa {
     @Id
@@ -21,13 +22,7 @@ public class Empresa {
     private String email;
     private String domicilioContacto;
     private String telefono;
-
-    /**
-     * Constructor por defecto de Empresa.
-     * Inicializa una nueva instancia de la clase Empresa sin establecer valores iniciales para los campos.
-     */
-    public Empresa() {
-    }
+    private String razonSocial;
 
     /**
      * Constructor que crea una instancia de {@link Empresa} basada en un {@link EmpresaDTO}.
@@ -46,5 +41,6 @@ public class Empresa {
         this.email = copy.getEmail();
         this.domicilioContacto = copy.getDomicilioContacto();
         this.telefono = copy.getTelefono();
+        this.razonSocial = copy.getRazonSocial();
     }
 }

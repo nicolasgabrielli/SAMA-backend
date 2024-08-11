@@ -17,6 +17,7 @@ public class EmpresaDTO {
     private String email;
     private String domicilioContacto;
     private String telefono;
+    private String razonSocial;
 
     public EmpresaDTO(){
         //Method empty on purpose

@@ -17,13 +17,18 @@ import java.util.List;
 @Getter
 @Setter
 public class Campo {
+    // Información del campo
     private String titulo;
     private String tipo;
     private Object contenido;
     private List<Campo> subCampos;
     private List<Evidencia> evidencias;
+
+    // Autorización
     private Boolean autorizado;
-    private InfoAutorizador infoAutorizador;
+    private String nombreAutorizador;
+    private String correoAutorizador;
+    private Date fechaAutorizacion;
 
     /**
      * Constructor por defecto de {@code Campo}.
@@ -144,11 +149,15 @@ public class Campo {
 
     public void autorizar(String nombreAutorizador, String correoAutorizador) {
         this.autorizado = true;
-        this.infoAutorizador = new InfoAutorizador(nombreAutorizador, correoAutorizador, new Date());
+        this.nombreAutorizador = nombreAutorizador;
+        this.correoAutorizador = correoAutorizador;
+        this.fechaAutorizacion = new Date();
     }
 
     public void desautorizar() {
         this.autorizado = false;
-        this.infoAutorizador = null;
+        this.nombreAutorizador = null;
+        this.correoAutorizador = null;
+        this.fechaAutorizacion = null;
     }
 }

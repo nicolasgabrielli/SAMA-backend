@@ -1,6 +1,5 @@
 package sama.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.*;
 import sama.entity.Reporte;
-import sama.jwt.JwtService;
 import sama.model.Campo;
 import sama.model.Categoria;
 import sama.model.Seccion;
@@ -156,7 +154,7 @@ public class ReporteController {
 
     @PutMapping("/autorizar/campo/{id}")
     public ResponseEntity<String> autorizarCampo(@PathVariable String id, @RequestBody AutorizacionCampoDTO autorizacionCampoDTO) {
-        Reporte reporte = reporteService.alternarAutorizacionCampo(id, autorizacionCampoDTO.getCoordenadas(), autorizacionCampoDTO.getIdUsuario());
+        Reporte reporte = reporteService.autorizacionCampo(id, autorizacionCampoDTO.getCoordenadas(), autorizacionCampoDTO.getIdUsuario());
         if (reporte == null) {
             return ResponseEntity.status(500).body("Error al autorizar campo");
         }

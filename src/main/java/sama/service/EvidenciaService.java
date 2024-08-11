@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
@@ -112,5 +113,17 @@ public class EvidenciaService {
             return null;
         }
         return generarURLTemporal("sama-testing", evidencia.getRutaEvidencia()).toString();
+    }
+
+    public Evidencia obtenerEvidencia(String idEvidencia) {
+        return evidenciaRepository.findById(idEvidencia).orElse(null);
+    }
+
+    public InputStream descargarEvidencia(String rutaEvidencia) {
+        try {
+            return s3Client.getObject(builder -> builder.bucket("sama-testing").key(rutaEvidencia));
+        } catch (S3Exception e) {
+            return null;
+        }
     }
 }

@@ -187,29 +187,30 @@ public class ReporteService {
         }
     }
 
-    public Reporte alternarAutorizacionCampo(String id, CoordenadasReporteDTO coordenadas, String idUsuario) {
-        Optional<Reporte> reporteOptional = reporteRepository.findById(id);
-        Usuario usuario = usuarioRepository.findById(idUsuario).get();
-        reporteOptional.ifPresentOrElse(
-                reporte -> autorizarCampo(reporte, coordenadas, usuario),
-                () -> {
-                    throw new RuntimeException("Reporte con id " + id + " no encontrado");
-                }
-        );
-        return reporteOptional.orElse(null);
+    public Reporte autorizacionCampo(String id, CoordenadasReporteDTO coordenadas, String idUsuario) {
+        Reporte reporte = reporteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte con id " + id + " no encontrado"));
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
+
+        alternarAutorizacionCampo(reporte, coordenadas, usuario);
+
+        reporte.setEstado(isAuthorized(reporte) ? "Autorizado" : "Pendiente");
+        return reporteRepository.save(reporte);
     }
 
-    private void autorizarCampo(Reporte reporte, CoordenadasReporteDTO coordenadas, Usuario usuario) {
-        if (coordenadas.getIndexCategoria() != null && coordenadas.getIndexSeccion() != null && coordenadas.getIndexCampo() != null) {
-            Campo campo = reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos().get(coordenadas.getIndexCampo());
+    private void alternarAutorizacionCampo(Reporte reporte, CoordenadasReporteDTO coordenadas, Usuario usuario) {
+        Integer indexCategoria = coordenadas.getIndexCategoria();
+        Integer indexSeccion = coordenadas.getIndexSeccion();
+        Integer indexCampo = coordenadas.getIndexCampo();
+
+        if (indexCategoria != null && indexSeccion != null && indexCampo != null) {
+            Campo campo = reporte.getCategorias().get(indexCategoria).getSecciones().get(indexSeccion).getCampos().get(indexCampo);
             if (campo.getAutorizado() == null) {
-                // Campo no tiene inicializado el campo autorizacion, por lo que se deja como true, ya que primero se autoriza antes de desautorizar
                 campo.autorizar(usuario.getNombre(), usuario.getCorreo());
             } else {
-                // Si el campo ya tiene inicializado ese campo, se alterna el valor
                 campo.alternarAutorizacion(usuario.getNombre(), usuario.getCorreo());
             }
-            reporteRepository.save(reporte);
         }
     }
 
@@ -225,6 +226,7 @@ public class ReporteService {
                 }
             }
         }
+        reporte.setEstado("Autorizado");
         return reporteRepository.save(reporte);
     }
 
@@ -243,5 +245,18 @@ public class ReporteService {
         } else {
             throw new RuntimeException("Reporte con id " + id + " no encontrado");
         }
+    }
+
+    private boolean isAuthorized(Reporte reporte) {
+        for (Categoria categoria : reporte.getCategorias()) {
+            for (Seccion seccion : categoria.getSecciones()) {
+                for (Campo campo : seccion.getCampos()) {
+                    if (campo.getAutorizado() == null || !campo.getAutorizado()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
