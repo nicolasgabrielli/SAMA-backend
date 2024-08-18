@@ -21,6 +21,7 @@ public class Campo {
     private String titulo;
     private String tipo;
     private Object contenido;
+    boolean porcentaje;
     private List<Campo> subCampos;
     private List<Evidencia> evidencias;
 

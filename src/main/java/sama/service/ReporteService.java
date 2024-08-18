@@ -60,7 +60,7 @@ public class ReporteService {
         if (contenidoNuevo.getCoordenadas().getIndexCategoria() != null) {
             updateCategoria(reporte, contenidoNuevo);
         }
-
+        reporte.setFechaModificacion(new Date());
         return reporteRepository.save(reporte);
     }
 
@@ -227,6 +227,7 @@ public class ReporteService {
             }
         }
         reporte.setEstado("Autorizado");
+        reporte.setIdUsuarioAutorizador(idUsuario); // Podria ser el usuario
         return reporteRepository.save(reporte);
     }
 
