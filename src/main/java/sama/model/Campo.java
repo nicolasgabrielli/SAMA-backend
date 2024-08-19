@@ -60,6 +60,7 @@ public class Campo {
         this.contenido = nuevoCampo.getContenido();
         this.subCampos = nuevoCampo.getSubCampos();
         this.evidencias = nuevoCampo.getEvidencias();
+        this.porcentaje = nuevoCampo.isPorcentaje();
     }
 
     /**
@@ -79,6 +80,7 @@ public class Campo {
         this.contenido = nuevoCampo.getContenido();
         this.subCampos = nuevoCampo.getSubCampos();
         this.evidencias = nuevoCampo.getEvidencias();
+        this.porcentaje = nuevoCampo.isPorcentaje();
     }
 
     /**
