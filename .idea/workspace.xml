@@ -4,60 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a903f754-7c24-4468-951f-d45f436a12b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/SamaApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/configuration/CorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/EmpresaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/ReporteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/controller/UsuarioController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/CoordenadasReporteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/EmpresaDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/EncabezadoReporteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/InfoActualizacionDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/InfoPresetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/ListadoEmpresaDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/ReporteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/dto/UsuarioDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Empresa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Evidencia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Reporte.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/entity/Usuario.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Campo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Categoria.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/model/Seccion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/EmpresaRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/EvidenciaRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/ReporteRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/repository/UsuarioRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/EmpresaService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/ReporteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/java/sama/service/UsuarioService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/EmpresaControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/ReporteControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/controller/UsuarioControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/EmpresaServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/ReporteServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sama-backend/src/test/java/sama/service/UsuarioServiceTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="a903f754-7c24-4468-951f-d45f436a12b1" name="Changes" comment="desautorizar si se modifica campo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,11 +26,11 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sama-backend" type="f1a62948:ProjectNode" />
+                <item name="sama" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sama-backend" type="f1a62948:ProjectNode" />
+                <item name="sama" type="f1a62948:ProjectNode" />
                 <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
@@ -97,6 +44,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Dockerfile" />
         <option value="Class" />
       </list>
     </option>
@@ -139,6 +87,10 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Gradle.Build sama-backend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.sama-backend [assemble].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.sama-backend [buildDependents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.sama-backend [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.sama-backend [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.sama-backend [dependencies].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
@@ -146,7 +98,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.SamaApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;desarrollo&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/IRiquelme/Documents/Workspace/sama-frontend&quot;,
@@ -155,10 +107,10 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.08326395&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -167,7 +119,95 @@
       <recent name="sama.configuration" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SamaApplication">
+  <component name="RunManager" selected="Gradle.sama-backend [assemble]">
+    <configuration name="sama-backend [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="assemble" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="sama-backend [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="sama-backend [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="sama-backend [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="sama-backend [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -199,6 +239,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.sama-backend [assemble]" />
+        <item itemvalue="Gradle.sama-backend [clean]" />
+        <item itemvalue="Gradle.sama-backend [build]" />
+        <item itemvalue="Gradle.sama-backend [buildDependents]" />
         <item itemvalue="Gradle.sama-backend [dependencies]" />
       </list>
     </recent_temporary>
@@ -206,8 +250,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -238,8 +282,227 @@
       <workItem from="1717425035618" duration="234000" />
       <workItem from="1717428881761" duration="590000" />
       <workItem from="1717429518694" duration="4946000" />
-      <workItem from="1717465619103" duration="1002000" />
+      <workItem from="1717465619103" duration="2345000" />
+      <workItem from="1717519269236" duration="1618000" />
+      <workItem from="1717521736062" duration="6395000" />
+      <workItem from="1717540380720" duration="4419000" />
+      <workItem from="1717590676325" duration="10634000" />
+      <workItem from="1717646401590" duration="2600000" />
+      <workItem from="1717650271956" duration="128000" />
+      <workItem from="1717680324216" duration="40000" />
+      <workItem from="1717680377005" duration="684000" />
+      <workItem from="1717947551231" duration="1877000" />
+      <workItem from="1717949497517" duration="11239000" />
+      <workItem from="1718049618119" duration="3457000" />
+      <workItem from="1718155200974" duration="10896000" />
+      <workItem from="1718398827563" duration="3333000" />
+      <workItem from="1718476982823" duration="1972000" />
+      <workItem from="1719116853992" duration="321000" />
+      <workItem from="1719179915841" duration="2965000" />
+      <workItem from="1719195943829" duration="4261000" />
+      <workItem from="1719699224066" duration="918000" />
+      <workItem from="1720418029616" duration="808000" />
+      <workItem from="1720756574749" duration="5538000" />
+      <workItem from="1720796559141" duration="2162000" />
+      <workItem from="1720798813702" duration="4421000" />
+      <workItem from="1720914107786" duration="9547000" />
+      <workItem from="1720928119945" duration="4549000" />
+      <workItem from="1720975639936" duration="14973000" />
+      <workItem from="1721059655602" duration="7149000" />
+      <workItem from="1721192382292" duration="55000" />
+      <workItem from="1721192572325" duration="1307000" />
+      <workItem from="1721618324473" duration="4063000" />
+      <workItem from="1721868151418" duration="22000" />
+      <workItem from="1722466128434" duration="1568000" />
+      <workItem from="1722477202168" duration="68000" />
+      <workItem from="1722545054756" duration="3230000" />
+      <workItem from="1723005777511" duration="1782000" />
+      <workItem from="1723040502604" duration="2008000" />
+      <workItem from="1723053155800" duration="10104000" />
+      <workItem from="1723075888348" duration="3086000" />
+      <workItem from="1723081310593" duration="754000" />
+      <workItem from="1723301133176" duration="2175000" />
+      <workItem from="1723329746438" duration="7700000" />
+      <workItem from="1723393857990" duration="2347000" />
+      <workItem from="1723404433141" duration="1400000" />
+      <workItem from="1723697661898" duration="1238000" />
+      <workItem from="1723759489495" duration="1792000" />
+      <workItem from="1723812313553" duration="903000" />
+      <workItem from="1723961056094" duration="3903000" />
+      <workItem from="1724072198128" duration="1125000" />
+      <workItem from="1724126781687" duration="446000" />
+      <workItem from="1724127274826" duration="170000" />
+      <workItem from="1724127454880" duration="225000" />
     </task>
+    <task id="LOCAL-00001" summary="Crear PDF primera version">
+      <option name="closed" value="true" />
+      <created>1717532059370</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717532059370</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix algunos warning">
+      <option name="closed" value="true" />
+      <created>1717533122436</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717533122436</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Ajustes de formato pdf reporte">
+      <option name="closed" value="true" />
+      <created>1717547434205</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717547434205</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Generar word y pdf reporte">
+      <option name="closed" value="true" />
+      <created>1717650371160</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717650371161</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Tabla provisional de indicadores">
+      <option name="closed" value="true" />
+      <created>1717954234849</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717954234849</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix subir archivo">
+      <option name="closed" value="true" />
+      <created>1717972664945</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1717972664945</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Guardando nombreOriginal archivo evidencia">
+      <option name="closed" value="true" />
+      <created>1717974054232</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717974054232</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Autorizar campo">
+      <option name="closed" value="true" />
+      <created>1718050274837</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1718050274837</updated>
+    </task>
+    <task id="LOCAL-00009" summary="ajuste autorizar campo">
+      <option name="closed" value="true" />
+      <created>1718082648587</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1718082648587</updated>
+    </task>
+    <task id="LOCAL-00010" summary="campo tipo tabla en documento">
+      <option name="closed" value="true" />
+      <created>1719182720997</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719182720997</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fix creacion tabla en documento">
+      <option name="closed" value="true" />
+      <created>1719200517681</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1719200517682</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fix creacion tabla en documento mediante csv">
+      <option name="closed" value="true" />
+      <created>1719700145272</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1719700145272</updated>
+    </task>
+    <task id="LOCAL-00013" summary="&quot;reescribir reporte&quot;">
+      <option name="closed" value="true" />
+      <created>1721626804261</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1721626804261</updated>
+    </task>
+    <task id="LOCAL-00014" summary="JWT TOKENS">
+      <option name="closed" value="true" />
+      <created>1722468955038</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1722468955038</updated>
+    </task>
+    <task id="LOCAL-00015" summary="properties">
+      <option name="closed" value="true" />
+      <created>1722477246659</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1722477246659</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Cambio tiempo token">
+      <option name="closed" value="true" />
+      <created>1723079000640</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1723079000640</updated>
+    </task>
+    <task id="LOCAL-00017" summary="AutorizacionCampoDTO">
+      <option name="closed" value="true" />
+      <created>1723082251554</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723082251554</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Sangria subCampo, Objeto InfoAutorizador, Validación usuario y empresas ya existentes">
+      <option name="closed" value="true" />
+      <created>1723303321519</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723303321519</updated>
+    </task>
+    <task id="LOCAL-00019" summary="arreglando autorizar todo">
+      <option name="closed" value="true" />
+      <created>1723405928991</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1723405928991</updated>
+    </task>
+    <task id="LOCAL-00020" summary="atributo porcentaje">
+      <option name="closed" value="true" />
+      <created>1723963723735</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1723963723736</updated>
+    </task>
+    <task id="LOCAL-00021" summary="desautorizar si se modifica campo">
+      <option name="closed" value="true" />
+      <created>1724127194086</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1724127194086</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +510,28 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Crear PDF primera version" />
+    <MESSAGE value="Fix algunos warning" />
+    <MESSAGE value="Ajustes de formato pdf reporte" />
+    <MESSAGE value="Generar word y pdf reporte" />
+    <MESSAGE value="Tabla provisional de indicadores" />
+    <MESSAGE value="Fix subir archivo" />
+    <MESSAGE value="Guardando nombreOriginal archivo evidencia" />
+    <MESSAGE value="Autorizar campo" />
+    <MESSAGE value="ajuste autorizar campo" />
+    <MESSAGE value="campo tipo tabla en documento" />
+    <MESSAGE value="Fix creacion tabla en documento" />
+    <MESSAGE value="Fix creacion tabla en documento mediante csv" />
+    <MESSAGE value="&quot;reescribir reporte&quot;" />
+    <MESSAGE value="JWT TOKENS" />
+    <MESSAGE value="properties" />
+    <MESSAGE value="Cambio tiempo token" />
+    <MESSAGE value="AutorizacionCampoDTO" />
+    <MESSAGE value="Sangria subCampo, Objeto InfoAutorizador, Validación usuario y empresas ya existentes" />
+    <MESSAGE value="arreglando autorizar todo" />
+    <MESSAGE value="atributo porcentaje" />
+    <MESSAGE value="desautorizar si se modifica campo" />
+    <option name="LAST_COMMIT_MESSAGE" value="desautorizar si se modifica campo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

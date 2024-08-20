@@ -60,6 +60,12 @@ public class ReporteService {
         if (contenidoNuevo.getCoordenadas().getIndexCategoria() != null) {
             updateCategoria(reporte, contenidoNuevo);
         }
+
+        if(contenidoNuevo.getCoordenadas().getIndexCampo() != null){
+            reporte.setEstado("Pendiente");
+            reporte.setIdUsuarioAutorizador(null);
+        }
+
         reporte.setFechaModificacion(new Date());
         return reporteRepository.save(reporte);
     }
@@ -109,10 +115,12 @@ public class ReporteService {
         } else if (contenidoNuevo.getCoordenadas().getIndexCampo() > seccion.getCampos().size() - 1) {
             // No tiene campos, ya que es campo nuevo
             Campo campo = new Campo(contenidoNuevo.getNuevoCampo());
+            campo.setAutorizado(false);
             seccion.getCampos().add(campo);
         } else {
             Campo campo = seccion.getCampos().get(contenidoNuevo.getCoordenadas().getIndexCampo());
             campo.actualizar(contenidoNuevo.getNuevoCampo());
+            campo.setAutorizado(false);
         }
     }
 
