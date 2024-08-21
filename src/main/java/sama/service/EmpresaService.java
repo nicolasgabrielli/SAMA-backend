@@ -44,6 +44,7 @@ public class EmpresaService {
         updatedEmpresa.setEmail(Optional.ofNullable(empresa.getEmail()).orElse(updatedEmpresa.getEmail()));
         updatedEmpresa.setDomicilioContacto(Optional.ofNullable(empresa.getDomicilioContacto()).orElse(updatedEmpresa.getDomicilioContacto()));
         updatedEmpresa.setTelefono(Optional.ofNullable(empresa.getTelefono()).orElse(updatedEmpresa.getTelefono()));
+        updatedEmpresa.setRazonSocial(Optional.ofNullable(empresa.getRazonSocial()).orElse(updatedEmpresa.getRazonSocial()));
 
         empresaRepository.save(updatedEmpresa);
 
