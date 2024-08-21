@@ -4,4 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import sama.entity.Empresa;
 
 public interface EmpresaRepository extends MongoRepository<Empresa, String> {
+    boolean existsByRut(String rut);
 }

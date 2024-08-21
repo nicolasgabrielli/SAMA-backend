@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sama.service.S3BucketService;
@@ -8,10 +8,10 @@ import sama.service.S3BucketService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class S3BucketController {
 
-    @Autowired
-    private S3BucketService s3BucketService;
+    private final S3BucketService s3BucketService;
 
     @GetMapping("/buckets")
     public List<String> listBuckets() {

@@ -76,13 +76,13 @@ class EmpresaServiceTest {
         empresa2.setRut("Rut");
         empresa2.setTelefono("Telefono");
         empresa2.setTipoSociedad("Tipo Sociedad");
+        empresa2.setRazonSocial("Razon Social");
 
         // Act
-        Empresa actualSaveResult = empresaService.save(empresa2);
+        int actualSaveResult = empresaService.save(empresa2);
 
         // Assert
         verify(empresaRepository).save(isA(Empresa.class));
-        assertSame(empresa, actualSaveResult);
     }
 
     /**

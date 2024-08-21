@@ -1,6 +1,8 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.*;
@@ -8,15 +10,20 @@ import sama.entity.Reporte;
 import sama.model.Campo;
 import sama.model.Categoria;
 import sama.model.Seccion;
+import sama.service.ReporteDocumentService;
 import sama.service.ReporteService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/reporte")
 public class ReporteController {
-    @Autowired
-    private ReporteService reporteService;
+
+    private final ReporteService reporteService;
+
+    private final ReporteDocumentService reporteDocumentService;
 
     @GetMapping("/por-empresa/{empresaId}")
     public ResponseEntity<List<EncabezadoReporteDTO>> obtenerReportesPorEmpresa(@PathVariable String empresaId) {
@@ -83,6 +90,35 @@ public class ReporteController {
         return ResponseEntity.ok(reporte.getCategorias().get(coordenadas.getIndexCategoria()).getSecciones().get(coordenadas.getIndexSeccion()).getCampos());
     }
 
+    @GetMapping("/word/{idReporte}")
+    public ResponseEntity<byte[]> obtenerWord(@PathVariable String idReporte) throws IOException {
+        byte[] pdf = reporteDocumentService.generarWord(idReporte);
+        String tituloReporte = reporteService.findById(idReporte).getTitulo();
+        String filename = tituloReporte + ".docx";
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
+    @GetMapping("/pdf/{idReporte}")
+    public ResponseEntity<byte[]> obtenerPdf(@PathVariable String idReporte) throws Exception {
+        byte[] pdf = reporteDocumentService.generarPdf(idReporte);
+        String tituloReporte = reporteService.findById(idReporte).getTitulo();
+        String filename = tituloReporte + ".pdf";
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
     @PostMapping("/crear/{companyId}")
     public ResponseEntity<String> crearReport(@PathVariable String companyId, @RequestBody Reporte reporte) {
         Reporte savedReport = reporteService.save(reporte, companyId);
@@ -105,6 +141,33 @@ public class ReporteController {
             return ResponseEntity.status(500).body("Error al actualizar reporte");
         }
         return ResponseEntity.ok("Reporte actualizado");
+    }
+
+    @PutMapping("/actualizar/reescribir/{id}")
+    public ResponseEntity<String> reescribirReporte(@PathVariable String id, @RequestBody Reporte nuevoReporte) {
+        Reporte reporte = reporteService.reescribirReporte(id, nuevoReporte);
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al reescribir reporte");
+        }
+        return ResponseEntity.ok("Reporte reescrito");
+    }
+
+    @PutMapping("/autorizar/campo/{id}")
+    public ResponseEntity<String> autorizarCampo(@PathVariable String id, @RequestBody AutorizacionCampoDTO autorizacionCampoDTO) {
+        Reporte reporte = reporteService.autorizacionCampo(id, autorizacionCampoDTO.getCoordenadas(), autorizacionCampoDTO.getIdUsuario());
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al autorizar campo");
+        }
+        return ResponseEntity.ok("Campo autorizado");
+    }
+
+    @PutMapping("/autorizar/all-campos/{id}")
+    public ResponseEntity<String> autorizarAllCampos(@PathVariable String id, @RequestBody AutorizacionCampoDTO autorizacionCampoDTO) {
+        Reporte reporte = reporteService.autorizarTodosLosCampos(id, autorizacionCampoDTO.getIdUsuario());
+        if (reporte == null) {
+            return ResponseEntity.status(500).body("Error al autorizar campos");
+        }
+        return ResponseEntity.ok("Campos autorizados");
     }
 
     @DeleteMapping("/eliminar/{id}")

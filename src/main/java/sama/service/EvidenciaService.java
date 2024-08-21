@@ -1,6 +1,6 @@
 package sama.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sama.entity.Evidencia;
@@ -15,25 +15,23 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EvidenciaService {
 
-    @Autowired
-    private EvidenciaRepository evidenciaRepository;
+    private final EvidenciaRepository evidenciaRepository;
 
-    @Autowired
-    private S3Client s3Client;
+    private final S3Client s3Client;
 
-    @Autowired
-    private S3Presigner s3Presigner;
+    private final S3Presigner s3Presigner;
 
-    @Autowired
-    private ReporteService reporteService;
+    private final ReporteService reporteService;
 
     public String subirEvidencia(String idReporte, String nombre, String tipo, String url, MultipartFile archivo) {
         Evidencia evidencia = new Evidencia();
@@ -41,7 +39,9 @@ public class EvidenciaService {
         evidencia.setNombre(nombre);
         evidencia.setTipo(tipo);
         evidencia.setUrl(url);
+        evidencia.setNombreOriginal(nombre);
         if (archivo != null && !archivo.isEmpty()) {
+            evidencia.setNombreOriginal(archivo.getOriginalFilename());
             String nombreUnico = generarNombreUnico(archivo.getOriginalFilename(), reporteService.findById(idReporte).getTitulo());
             try {
                 PutObjectRequest request = PutObjectRequest.builder()
@@ -56,7 +56,8 @@ public class EvidenciaService {
                 return null;
             }
         }
-        evidenciaRepository.save(evidencia);
+        Evidencia evidenciaGuardada = evidenciaRepository.save(evidencia);
+        reporteService.asociarEvidencia(idReporte, evidenciaGuardada);
         return "Evidencia guardada";
     }
 
@@ -112,5 +113,17 @@ public class EvidenciaService {
             return null;
         }
         return generarURLTemporal("sama-testing", evidencia.getRutaEvidencia()).toString();
+    }
+
+    public Evidencia obtenerEvidencia(String idEvidencia) {
+        return evidenciaRepository.findById(idEvidencia).orElse(null);
+    }
+
+    public InputStream descargarEvidencia(String rutaEvidencia) {
+        try {
+            return s3Client.getObject(builder -> builder.bucket("sama-testing").key(rutaEvidencia));
+        } catch (S3Exception e) {
+            return null;
+        }
     }
 }

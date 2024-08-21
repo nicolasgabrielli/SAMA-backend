@@ -1,13 +1,14 @@
 package sama.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import sama.dto.EmpresaDTO;
 
-@Setter
-@Getter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "empresa")
 public class Empresa {
     @Id
@@ -21,9 +22,15 @@ public class Empresa {
     private String email;
     private String domicilioContacto;
     private String telefono;
+    private String razonSocial;
 
-    public Empresa() {
-    }
+    /**
+     * Constructor que crea una instancia de {@link Empresa} basada en un {@link EmpresaDTO}.
+     * Este constructor copia los valores de los campos desde el objeto DTO proporcionado a la nueva instancia de Empresa.
+     * Esto incluye el id, nombre, tipo de sociedad, RUT, domicilio de la empresa, página web, email, domicilio de contacto y teléfono.
+     *
+     * @param copy El objeto {@link EmpresaDTO} del cual se copian los datos.
+     */
     public Empresa(EmpresaDTO copy) {
         this.id = copy.getId();
         this.nombre = copy.getNombre();
@@ -34,5 +41,6 @@ public class Empresa {
         this.email = copy.getEmail();
         this.domicilioContacto = copy.getDomicilioContacto();
         this.telefono = copy.getTelefono();
+        this.razonSocial = copy.getRazonSocial();
     }
 }

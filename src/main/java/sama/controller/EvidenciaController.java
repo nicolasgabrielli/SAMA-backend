@@ -1,19 +1,23 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sama.entity.Evidencia;
 import sama.service.EvidenciaService;
 
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/evidencia/")
 public class EvidenciaController {
-    @Autowired
-    private EvidenciaService evidenciaService;
+
+    private final EvidenciaService evidenciaService;
 
     @PostMapping("/{idReporte}")
     public ResponseEntity<String> subirEvidencia(@PathVariable String idReporte,
@@ -38,6 +42,28 @@ public class EvidenciaController {
     @GetMapping("url/{idEvidencia}")
     public ResponseEntity<String> obtenerUrlS3(@PathVariable String idEvidencia) {
         return ResponseEntity.ok(evidenciaService.obtenerUrlS3(idEvidencia));
+    }
+
+    @GetMapping("descargar/{idEvidencia}")
+    public ResponseEntity<InputStreamResource> descargarEvidencia(@PathVariable String idEvidencia) {
+        Evidencia evidencia = evidenciaService.obtenerEvidencia(idEvidencia);
+        if (evidencia == null) {
+            return ResponseEntity.notFound().build();
+        }
+        try {
+            InputStream inputStream = evidenciaService.descargarEvidencia(evidencia.getRutaEvidencia());
+            if (inputStream == null) {
+                return ResponseEntity.status(500).build();
+            }
+            String nombreArchivo = evidencia.getNombreOriginal();
+            return ResponseEntity.ok()
+                    .contentLength(inputStream.available())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nombreArchivo)
+                    .body(new InputStreamResource(inputStream));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @DeleteMapping("/{idEvidencia}")

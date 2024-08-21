@@ -1,6 +1,6 @@
 package sama.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sama.dto.EmpresaDTO;
@@ -11,13 +11,13 @@ import sama.service.EmpresaService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/empresa")
 public class EmpresaController {
-    @Autowired
-    private EmpresaService empresaService;
+
+    private final EmpresaService empresaService;
 
     @GetMapping
-// Entrega una lista de todas las empresas (con todos sus datos: id, nombre, reportes). Revisar si se ocupara.
     public ResponseEntity<List<Empresa>> obtenerEmpresas() {
         List<Empresa> empresas = empresaService.findAll();
         if (empresas.isEmpty()) {
@@ -56,8 +56,8 @@ public class EmpresaController {
     @PutMapping()
     public ResponseEntity<String> actualizarEmpresa(@RequestBody EmpresaDTO empresa) {
         Empresa data = new Empresa(empresa);
-        Empresa updatedEmpresa = empresaService.save(data);
-        if (updatedEmpresa == null) {
+        int response = empresaService.save(data);
+        if (response == 1) {
             return ResponseEntity.status(500).body("Error al actualizar empresa");
         }
         return ResponseEntity.ok("Empresa actualizada");
@@ -66,9 +66,9 @@ public class EmpresaController {
     @PostMapping()
     public ResponseEntity<String> guardarEmpresa(@RequestBody EmpresaDTO empresa) {
         Empresa data = new Empresa(empresa);
-        Empresa savedEmpresa = empresaService.save(data);
-        if (savedEmpresa == null) {
-            return ResponseEntity.status(500).body("Error al guardar empresa");
+        int response = empresaService.save(data);
+        if (response == 1) {
+            return ResponseEntity.status(500).body("Empresa ya existe");
         }
         return ResponseEntity.ok("Empresa guardada");
     }
