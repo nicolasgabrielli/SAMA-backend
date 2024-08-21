@@ -56,7 +56,7 @@ public class EmpresaController {
     @PutMapping()
     public ResponseEntity<String> actualizarEmpresa(@RequestBody EmpresaDTO empresa) {
         Empresa data = new Empresa(empresa);
-        int response = empresaService.save(data);
+        int response = empresaService.update(data);
         if (response == 1) {
             return ResponseEntity.status(500).body("Error al actualizar empresa");
         }
