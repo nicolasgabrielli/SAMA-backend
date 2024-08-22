@@ -1,6 +1,5 @@
 package sama.repository;
 
-import org.springframework.data.mongodb.repository.ExistsQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import sama.entity.Usuario;
 

@@ -17,6 +17,11 @@ public class EmpresaController {
 
     private final EmpresaService empresaService;
 
+    /**
+     * Obtiene una lista de todas las empresas.
+     *
+     * @return ResponseEntity con la lista de empresas.
+     */
     @GetMapping
     public ResponseEntity<List<Empresa>> obtenerEmpresas() {
         List<Empresa> empresas = empresaService.findAll();
@@ -26,7 +31,12 @@ public class EmpresaController {
         return ResponseEntity.ok(empresas);
     }
 
-    @GetMapping("/nombres") // Entrega una lista de "ElementoListaEmpresa" que contiene el id y nombre de cada empresa
+    /**
+     * Obtiene una lista de nombres de todas las empresas.
+     *
+     * @return ResponseEntity con la lista de nombres de empresas.
+     */
+    @GetMapping("/nombres")
     public ResponseEntity<List<ListadoEmpresaDTO>> obtenerNombresEmpresas() {
         List<ListadoEmpresaDTO> empresas = empresaService.obtenerNombres();
         if (empresas.isEmpty()) {
@@ -35,6 +45,12 @@ public class EmpresaController {
         return ResponseEntity.ok(empresas);
     }
 
+    /**
+     * Obtiene una empresa por su ID.
+     *
+     * @param id ID de la empresa.
+     * @return ResponseEntity con la empresa encontrada.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> obtenerEmpresa(@PathVariable String id) {
         Empresa empresa = empresaService.findById(id);
@@ -44,6 +60,12 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
+    /**
+     * Elimina una empresa por su ID.
+     *
+     * @param id ID de la empresa a eliminar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarEmpresa(@PathVariable String id) {
         empresaService.deleteById(id);
@@ -53,6 +75,12 @@ public class EmpresaController {
         return ResponseEntity.ok("Empresa eliminada");
     }
 
+    /**
+     * Actualiza una empresa.
+     *
+     * @param empresa DTO de la empresa a actualizar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @PutMapping()
     public ResponseEntity<String> actualizarEmpresa(@RequestBody EmpresaDTO empresa) {
         Empresa data = new Empresa(empresa);
@@ -63,6 +91,12 @@ public class EmpresaController {
         return ResponseEntity.ok("Empresa actualizada");
     }
 
+    /**
+     * Guarda una nueva empresa.
+     *
+     * @param empresa DTO de la empresa a guardar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @PostMapping()
     public ResponseEntity<String> guardarEmpresa(@RequestBody EmpresaDTO empresa) {
         Empresa data = new Empresa(empresa);

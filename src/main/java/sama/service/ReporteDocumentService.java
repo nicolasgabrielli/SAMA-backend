@@ -1,12 +1,12 @@
 package sama.service;
 
+import com.aspose.words.Document;
+import com.aspose.words.SaveFormat;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.poi.xwpf.usermodel.*;
-import com.aspose.words.Document;
-import com.aspose.words.SaveFormat;
 import org.springframework.stereotype.Service;
 import sama.entity.Reporte;
 import sama.model.Campo;
@@ -111,7 +111,11 @@ public class ReporteDocumentService {
             XWPFRun contenidoRun = paragraph.createRun();
             contenidoRun.addBreak();
             if (!campo.getTipo().equalsIgnoreCase("tabla")) {
-                contenidoRun.setText(campo.getContenido().toString());
+                if (campo.getTipo().equalsIgnoreCase("booleano")){
+                    contenidoRun.setText(campo.getContenido().toString().equalsIgnoreCase("true") ? "Sí" : "No");
+                } else {
+                    contenidoRun.setText(campo.getContenido().toString());
+                }
                 contenidoRun.setFontSize(11); // Tamaño de fuente para el contenido de campos principales y secundarios
             } else {
                 agregarTabla(document, campo.getContenido()); // Agregar tabla si el campo es de tipo tabla

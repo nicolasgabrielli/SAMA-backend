@@ -13,6 +13,11 @@ public class S3BucketController {
 
     private final S3BucketService s3BucketService;
 
+    /**
+     * Obtiene la lista de todos los buckets.
+     *
+     * @return Lista de nombres de buckets.
+     */
     @GetMapping("/buckets")
     public List<String> listBuckets() {
         return s3BucketService.listBuckets();

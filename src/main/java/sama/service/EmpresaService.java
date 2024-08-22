@@ -15,6 +15,7 @@ import java.util.Optional;
 public class EmpresaService {
 
     private final EmpresaRepository empresaRepository;
+    private final UsuarioService usuarioService;
 
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
@@ -53,6 +54,7 @@ public class EmpresaService {
 
     public void deleteById(String id) {
         empresaRepository.deleteById(id);
+        usuarioService.elimarEmpresaDeUsuarios(id);
     }
 
     public List<ListadoEmpresaDTO> obtenerNombres() {

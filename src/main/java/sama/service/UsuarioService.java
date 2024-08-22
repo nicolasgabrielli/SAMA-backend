@@ -62,4 +62,14 @@ public class UsuarioService {
 
         return usuarioRepository.save(updatedUser);
     }
+
+    public void elimarEmpresaDeUsuarios(String id) {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getEmpresas().contains(id)) {
+                usuario.getEmpresas().remove(id);
+                usuarioRepository.save(usuario);
+            }
+        }
+    }
 }

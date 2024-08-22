@@ -16,6 +16,11 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    /**
+     * Obtiene una lista de todos los usuarios.
+     *
+     * @return ResponseEntity con la lista de usuarios.
+     */
     @GetMapping
     public ResponseEntity<List<Usuario>> obtenerUsuarios() {
         List<Usuario> usuarios = usuarioService.obtenerUsuarios();
@@ -25,6 +30,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
+    /**
+     * Obtiene un usuario por su ID.
+     *
+     * @param id ID del usuario.
+     * @return ResponseEntity con el usuario encontrado.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable String id) {
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
@@ -34,6 +45,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    /**
+     * Actualiza un usuario.
+     *
+     * @param usuario DTO del usuario a actualizar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @PutMapping()
     public ResponseEntity<String> updateUser(@RequestBody UsuarioDTO usuario) {
         Usuario updatedUser = usuarioService.update(usuario);
@@ -43,6 +60,12 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario actualizado");
     }
 
+    /**
+     * Guarda un nuevo usuario.
+     *
+     * @param usuario DTO del usuario a guardar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @PostMapping()
     public ResponseEntity<String> saveUser(@RequestBody UsuarioDTO usuario) {
         int response = usuarioService.save(usuario);
@@ -52,6 +75,12 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario guardado");
     }
 
+    /**
+     * Elimina un usuario por su ID.
+     *
+     * @param id ID del usuario a eliminar.
+     * @return ResponseEntity con el resultado de la operación.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
         int response = usuarioService.deleteById(id);
