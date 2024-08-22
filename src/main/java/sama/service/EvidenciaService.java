@@ -42,7 +42,7 @@ public class EvidenciaService {
         evidencia.setNombreOriginal(nombre);
         if (archivo != null && !archivo.isEmpty()) {
             evidencia.setNombreOriginal(archivo.getOriginalFilename());
-            String nombreUnico = generarNombreUnico(archivo.getOriginalFilename(), reporteService.findById(idReporte).getTitulo());
+            String nombreUnico = generarNombreUnico(archivo.getOriginalFilename());
             try {
                 PutObjectRequest request = PutObjectRequest.builder()
                         .bucket("sama-testing")
@@ -61,10 +61,10 @@ public class EvidenciaService {
         return "Evidencia guardada";
     }
 
-    private String generarNombreUnico(String nombreOriginal, String tituloReporte) {
+    private String generarNombreUnico(String nombreOriginal) {
         UUID uuid = UUID.randomUUID();
         String seccionUUID = uuid.toString().substring(0,4);
-        return tituloReporte + " - " + nombreOriginal + " - " + seccionUUID;
+        return seccionUUID + " - " + nombreOriginal;
     }
 
     public List<Evidencia> obtenerEvidenciaReporte(String idReporte) {
