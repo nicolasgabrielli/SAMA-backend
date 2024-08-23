@@ -64,7 +64,7 @@ public class EvidenciaService {
     private String generarNombreUnico(String nombreOriginal) {
         UUID uuid = UUID.randomUUID();
         String seccionUUID = uuid.toString().substring(0,4);
-        return seccionUUID + " - " + nombreOriginal;
+        return seccionUUID + "-" + nombreOriginal;
     }
 
     public List<Evidencia> obtenerEvidenciaReporte(String idReporte) {
@@ -96,14 +96,16 @@ public class EvidenciaService {
         if (evidencia == null) {
             return null;
         }
-        evidenciaRepository.delete(evidencia);
         if (evidencia.getRutaEvidencia() != null) {
             try {
                 s3Client.deleteObject(builder -> builder.bucket("sama-testing").key(evidencia.getRutaEvidencia()));
             } catch (S3Exception e) {
+                System.err.println("Error eliminando el objeto de S3: " + e.getMessage());
                 return null;
             }
         }
+        evidenciaRepository.delete(evidencia);
+        reporteService.eliminarEvidenciaDelReporte(idEvidencia, evidencia.getIdReporte());
         return "Evidencia eliminada";
     }
 

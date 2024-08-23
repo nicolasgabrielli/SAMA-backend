@@ -163,4 +163,10 @@ public class Campo {
         this.correoAutorizador = null;
         this.fechaAutorizacion = null;
     }
+
+    public void eliminarEvidencia(String idEvidencia) {
+        if (this.evidencias != null) {
+            this.evidencias.removeIf(evidencia -> idEvidencia.equals(evidencia.getId()));
+        }
+    }
 }

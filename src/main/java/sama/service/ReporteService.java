@@ -268,4 +268,20 @@ public class ReporteService {
         }
         return true;
     }
+
+    public void eliminarEvidenciaDelReporte(String idEvidencia, String idReporte) {
+        Optional<Reporte> reporteOptional = reporteRepository.findById(idReporte);
+        if (reporteOptional.isPresent()) {
+            Reporte reporte = reporteOptional.get();
+            reporte.getEvidencias().removeIf(evidencia -> evidencia.getId().equals(idEvidencia));
+            for (Categoria categoria : reporte.getCategorias()) {
+                for (Seccion seccion : categoria.getSecciones()) {
+                    seccion.getCampos().forEach(campo -> campo.eliminarEvidencia(idEvidencia));
+                }
+            }
+            reporteRepository.save(reporte);
+        } else {
+            throw new RuntimeException("Reporte con id " + idReporte + " no encontrado");
+        }
+    }
 }
