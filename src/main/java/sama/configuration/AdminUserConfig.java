@@ -21,18 +21,17 @@ public class AdminUserConfig {
     @Bean
     CommandLineRunner initAdminUser() {
         return args -> {
-            String adminEmail = "admin@tuapp.com";
-            if (usuarioRepository.findByCorreo(adminEmail).isEmpty()) {
+            if (!usuarioRepository.existsByRol("0")) {
                 Usuario admin = new Usuario();
-                admin.setNombre("Admin");
-                admin.setCorreo(adminEmail);
+                admin.setNombre("Default Admin");
+                admin.setCorreo("admin@sama.com");
                 admin.setContrasenia(passwordEncoder.encode("admin123"));
                 admin.setRol("0");
                 admin.setEmpresas(List.of());
                 usuarioRepository.save(admin);
-                System.out.println("Usuario administrador creado: " + adminEmail);
+                System.out.println("Administrador default creado");
             } else {
-                System.out.println("Usuario administrador ya existe.");
+                System.out.println("Ya existe al menos un usuario administrador");
             }
         };
     }

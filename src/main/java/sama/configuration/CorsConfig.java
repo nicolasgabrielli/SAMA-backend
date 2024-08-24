@@ -9,7 +9,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Permitir todas las rutas
-                .allowedOrigins("*") // Permitir solicitudes desde cualquier origen
+                .allowedOrigins("http://localhost", "https://sama.bgrcsoftware.com") // Permitir solicitudes desde cualquier origen
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
                 .allowedHeaders("*"); // Encabezados permitidos
     }

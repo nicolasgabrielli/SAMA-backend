@@ -39,6 +39,10 @@ public class UsuarioService {
 
     public int deleteById(String id) {
         if (usuarioRepository.existsById(id)) {
+            // Si usuario es el ultimo administrador, no se puede eliminar
+            if (usuarioRepository.findById(id).get().getRol().equals("0") && usuarioRepository.findAll().stream().filter(usuario -> usuario.getRol().equals("0")).count() == 1) {
+                return -1; // No se puede eliminar el último administrador
+            }
             usuarioRepository.deleteById(id);
             return 1; // Usuario eliminado
         }
